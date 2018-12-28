@@ -1,5 +1,6 @@
 package org.socialnetwork.apis.friendsmanagement;
 
+import org.socialnetwork.apis.friendsmanagement.config.SwaggerConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;

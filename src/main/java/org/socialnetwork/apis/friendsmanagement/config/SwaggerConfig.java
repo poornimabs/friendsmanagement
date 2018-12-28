@@ -1,4 +1,4 @@
-package org.socialnetwork.apis.friendsmanagement;
+package org.socialnetwork.apis.friendsmanagement.config;
 
 import java.util.Collections;
 
