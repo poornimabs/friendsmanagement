@@ -27,4 +27,7 @@ You are expected to have a basic knowledge of how Spring Framework works, what i
 ### Swagger
 * Design is the foundation of your API development. Swagger makes API design a breeze,
  with easy-to-use tools for developers, architects, and product owners.
-[a link](http://localhost:8080/swagger-ui.html#/)
+ #### Swagger UI
+ * git clone the project 
+ * Build the project and find API documentation in below link
+[Swagger UI](http://localhost:8080/swagger-ui.html#/)
