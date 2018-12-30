@@ -1,7 +1,8 @@
 package org.socialnetwork.apis.friendsmanagement.service;
 
+import org.socialnetwork.apis.friendsmanagement.constant.ApplicationConstants;
 import org.socialnetwork.apis.friendsmanagement.dto.FriendConnectionDTO;
-import org.socialnetwork.apis.friendsmanagement.entity.Friends;
+import org.socialnetwork.apis.friendsmanagement.entity.Friendship;
 import org.socialnetwork.apis.friendsmanagement.repository.FriendConnectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,6 @@ public class FriendConnectionServiceImpl implements FriendConnectionService{
 	public void friendConnection(FriendConnectionDTO friendConnectionDTO) {
 		String personOne = friendConnectionDTO.getFriends().get(0);
         String personTwo = friendConnectionDTO.getFriends().get(1);
-		friendConnectionRepository.save(new Friends(personOne,personTwo));
+		friendConnectionRepository.save(new Friendship(personOne,personTwo,ApplicationConstants.STATUS_ACCEPTED));
 	}
 }

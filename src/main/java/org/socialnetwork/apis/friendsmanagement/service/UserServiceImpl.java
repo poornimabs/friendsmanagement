@@ -22,8 +22,8 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public Users account(AccountDTO accountDTO) {
-		return userRepository.save(new Users(accountDTO.getEmail()));
+		return userRepository.save(new Users(accountDTO.getEmail(), 
+				accountDTO.getUsername(), accountDTO.getPassword()));
 	}
-
 	
 }

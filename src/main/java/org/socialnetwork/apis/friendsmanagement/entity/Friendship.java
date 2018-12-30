@@ -8,7 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
-* Entity class for Friends
+* Entity class for Friendship
 *
 * @author  Poornima.BS
 * @version 1.0
@@ -16,7 +16,7 @@ import javax.persistence.Id;
 */
 
 @Entity
-public class Friends implements Serializable{
+public class Friendship implements Serializable{
 	
 	private static final long serialVersionUID = 89096439103242259L;
 	
@@ -25,11 +25,13 @@ public class Friends implements Serializable{
 	private Long id;
 	private String user_one;
 	private String user_two;
+	private int status;
 	
-	public Friends(String userOne, String userTwo) {
+	public Friendship(String userOne, String userTwo, int status) {
 		super();
 		this.user_one = userOne;
 		this.user_two = userTwo;
+		this.status = status;
 	}
 	public Long getId() {
 		return id;
@@ -49,6 +51,11 @@ public class Friends implements Serializable{
 	public void setUser_two(String user_two) {
 		this.user_two = user_two;
 	}
-	
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
 }

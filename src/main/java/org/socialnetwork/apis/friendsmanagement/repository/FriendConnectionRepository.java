@@ -1,7 +1,7 @@
 package org.socialnetwork.apis.friendsmanagement.repository;
 
 
-import org.socialnetwork.apis.friendsmanagement.entity.Friends;
+import org.socialnetwork.apis.friendsmanagement.entity.Friendship;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -13,6 +13,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 */
 
 
-public interface FriendConnectionRepository extends JpaRepository<Friends, String>{
+public interface FriendConnectionRepository extends JpaRepository<Friendship, String>{
 	
 }
