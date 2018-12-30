@@ -1,8 +1,12 @@
 package org.socialnetwork.apis.friendsmanagement.repository;
 
 
+import java.util.List;
+
 import org.socialnetwork.apis.friendsmanagement.entity.Friendship;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
 * FriendConnection Repository class
@@ -14,5 +18,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 public interface FriendConnectionRepository extends JpaRepository<Friendship, String>{
+	
+	/**
+     * @param person
+     * @return List of friends for a person
+     */
+    @Query(nativeQuery = true)
+    List<String> fetchFriends(@Param("user") final String user);
 	
 }

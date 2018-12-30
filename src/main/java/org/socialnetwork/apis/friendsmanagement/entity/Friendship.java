@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedNativeQuery;
 
 /**
 * Entity class for Friendship
@@ -16,6 +17,9 @@ import javax.persistence.Id;
 */
 
 @Entity
+@NamedNativeQuery(name = "Friendship.fetchFriends",
+query = "SELECT user_two AS friend FROM Friendship WHERE user_one =:user and status=1"  + " UNION "
+    + "SELECT user_one AS friend FROM Friendship WHERE user_two =:user and status=1")
 public class Friendship implements Serializable{
 	
 	private static final long serialVersionUID = 89096439103242259L;

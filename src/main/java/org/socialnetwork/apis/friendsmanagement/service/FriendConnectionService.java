@@ -1,6 +1,9 @@
 package org.socialnetwork.apis.friendsmanagement.service;
 
+import java.util.List;
+
 import org.socialnetwork.apis.friendsmanagement.dto.FriendConnectionDTO;
+import org.socialnetwork.apis.friendsmanagement.dto.UserEmailDTO;
 
 /**
 * REST endpoint for friends management.
@@ -15,4 +18,6 @@ import org.socialnetwork.apis.friendsmanagement.dto.FriendConnectionDTO;
 public interface FriendConnectionService {
 
 	void friendConnection(FriendConnectionDTO friendConnectionDTO);
+	
+	List<String> friendsList(UserEmailDTO userEmailDTO);
 }
