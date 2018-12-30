@@ -13,6 +13,11 @@ import org.socialnetwork.apis.friendsmanagement.entity.Users;
 
 public interface UserService {
 	
+	/**
+	 * This method is used to create an account for a user
+     * @param friendConnectionDTO
+     * @return void
+     */
 	Users account(AccountDTO accountDTO); 
 
 }

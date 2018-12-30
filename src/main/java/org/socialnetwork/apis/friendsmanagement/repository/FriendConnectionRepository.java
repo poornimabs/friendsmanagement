@@ -20,8 +20,8 @@ import org.springframework.data.repository.query.Param;
 public interface FriendConnectionRepository extends JpaRepository<Friendship, String>{
 	
 	/**
-     * @param person
-     * @return List of friends for a person
+     * @param user
+     * @return List of friends for a user
      */
     @Query(nativeQuery = true)
     List<String> fetchFriends(@Param("user") final String user);

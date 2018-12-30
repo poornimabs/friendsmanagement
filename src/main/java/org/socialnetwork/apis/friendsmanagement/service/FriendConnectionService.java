@@ -17,7 +17,17 @@ import org.socialnetwork.apis.friendsmanagement.dto.UserEmailDTO;
 
 public interface FriendConnectionService {
 
+	/**
+	 * This method is used to create a friendship b/w two users
+     * @param friendConnectionDTO
+     * @return void
+     */
 	void friendConnection(FriendConnectionDTO friendConnectionDTO);
 	
+	/**
+	 * This methos is used to get friends list wrt single user
+     * @param userEmailDTO
+     * @return Friends List for user
+     */
 	List<String> friendsList(UserEmailDTO userEmailDTO);
 }

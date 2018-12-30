@@ -24,6 +24,9 @@ public class FriendConnectionServiceImpl implements FriendConnectionService{
 	@Autowired
 	FriendConnectionRepository friendConnectionRepository;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void friendConnection(FriendConnectionDTO friendConnectionDTO) {
 		String personOne = friendConnectionDTO.getFriends().get(0);
@@ -31,6 +34,9 @@ public class FriendConnectionServiceImpl implements FriendConnectionService{
 		friendConnectionRepository.save(new Friendship(personOne,personTwo,ApplicationConstants.STATUS_ACCEPTED));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<String> friendsList(UserEmailDTO userEmailDTO) {
 		List<String> friendsList = friendConnectionRepository.fetchFriends(userEmailDTO.getEmail());

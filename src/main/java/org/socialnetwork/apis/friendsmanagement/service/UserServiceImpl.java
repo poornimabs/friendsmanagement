@@ -20,6 +20,9 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	UsersRepository userRepository;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Users account(AccountDTO accountDTO) {
 		return userRepository.save(new Users(accountDTO.getEmail(), 
