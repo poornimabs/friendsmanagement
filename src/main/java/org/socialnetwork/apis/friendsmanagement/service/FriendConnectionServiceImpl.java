@@ -5,13 +5,13 @@ import java.util.List;
 import org.socialnetwork.apis.friendsmanagement.constant.ApplicationConstants;
 import org.socialnetwork.apis.friendsmanagement.dto.FriendConnectionDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.UserEmailDTO;
-import org.socialnetwork.apis.friendsmanagement.entity.FriendshipEntity;
+import org.socialnetwork.apis.friendsmanagement.entity.FriendrelationEntity;
 import org.socialnetwork.apis.friendsmanagement.repository.FriendConnectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * FriendConnections Services Implementation
+ * FriendConnections/Requests Services Implementation
  *
  * @author  Poornima.BS
  * @version 1.0
@@ -23,7 +23,7 @@ public class FriendConnectionServiceImpl implements FriendConnectionService{
 
 	@Autowired
 	FriendConnectionRepository friendConnectionRepository;
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -31,7 +31,7 @@ public class FriendConnectionServiceImpl implements FriendConnectionService{
 	public void friendConnection(FriendConnectionDTO friendConnectionDTO) {
 		String personOne = friendConnectionDTO.getFriends().get(0);
 		String personTwo = friendConnectionDTO.getFriends().get(1);
-		friendConnectionRepository.save(new FriendshipEntity(personOne,personTwo,
+		friendConnectionRepository.save(new FriendrelationEntity(personOne,personTwo,
 				ApplicationConstants.STATUS_ACCEPTED));
 	}
 
@@ -53,4 +53,5 @@ public class FriendConnectionServiceImpl implements FriendConnectionService{
 				friendConnectionDTO.getFriends().get(1));
 		return friendsList;
 	}
+	
 }

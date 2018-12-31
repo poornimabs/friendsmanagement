@@ -18,29 +18,29 @@ import javax.persistence.Table;
  * @since   1.0 
  */
 
-@Entity(name="FriendshipEntity")
-@Table (name="friendship")
+@Entity(name="FriendrelationEntity")
+@Table (name="friendrelation")
 
 @NamedNativeQueries({
 	@NamedNativeQuery(
-			name = "FriendshipEntity.getFriends",
-			query = "SELECT user_two AS friend FROM friendship WHERE user_one =:user and status=1"  + " UNION "
-					+ "SELECT user_one AS friend FROM friendship WHERE user_two =:user and status=1"
+			name = "FriendrelationEntity.getFriends",
+			query = "SELECT user_two AS friend FROM friendrelation WHERE user_one =:user and status=1"  + " UNION "
+					+ "SELECT user_one AS friend FROM friendrelation WHERE user_two =:user and status=1"
 			),
 	@NamedNativeQuery(
-			name = "FriendshipEntity.getCommonFriends",
+			name = "FriendrelationEntity.getCommonFriends",
 			query = "SELECT UserOneFriends.id FROM"
-					+ "( SELECT user_two id FROM friendship WHERE user_one = :userone and status=1" + " UNION "
-					+ "SELECT user_one id FROM friendship WHERE user_two = :userone and status=1)" + " AS UserOneFriends"  
+					+ "( SELECT user_two id FROM friendrelation WHERE user_one = :userone and status=1" + " UNION "
+					+ "SELECT user_one id FROM friendrelation WHERE user_two = :userone and status=1)" + " AS UserOneFriends"  
 					+ " JOIN "
-					+ "( SELECT user_two id FROM friendship WHERE user_one = :usertwo and status=1" + " UNION "
-					+ "SELECT user_one id FROM friendship WHERE user_two = :usertwo and status=1)" + " AS UserTwoFriends"  
+					+ "( SELECT user_two id FROM friendrelation WHERE user_one = :usertwo and status=1" + " UNION "
+					+ "SELECT user_one id FROM friendrelation WHERE user_two = :usertwo and status=1)" + " AS UserTwoFriends"  
 					+ " ON UserOneFriends.id = UserTwoFriends.id"
 			)
 })
 
 
-public class FriendshipEntity implements Serializable{
+public class FriendrelationEntity implements Serializable{
 
 	private static final long serialVersionUID = 89096439103242259L;
 
@@ -51,7 +51,7 @@ public class FriendshipEntity implements Serializable{
 	private String user_two;
 	private int status;
 
-	public FriendshipEntity(String userOne, String userTwo, int status) {
+	public FriendrelationEntity(String userOne, String userTwo, int status) {
 		super();
 		this.user_one = userOne;
 		this.user_two = userTwo;

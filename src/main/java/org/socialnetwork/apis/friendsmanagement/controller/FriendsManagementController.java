@@ -8,9 +8,13 @@ import org.socialnetwork.apis.friendsmanagement.constant.ApplicationConstants;
 import org.socialnetwork.apis.friendsmanagement.dto.AccountDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.FriendConnectionDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.FriendsListDTO;
+import org.socialnetwork.apis.friendsmanagement.dto.NotificationDTO;
+import org.socialnetwork.apis.friendsmanagement.dto.NotifyDTO;
+import org.socialnetwork.apis.friendsmanagement.dto.NotifyResponseDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.ResponseDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.UserEmailDTO;
 import org.socialnetwork.apis.friendsmanagement.service.FriendConnectionService;
+import org.socialnetwork.apis.friendsmanagement.service.NotificationService;
 import org.socialnetwork.apis.friendsmanagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,7 +44,9 @@ public class FriendsManagementController {
 	@Autowired
 	FriendConnectionService friendConnectionService;
 
-
+	@Autowired
+	NotificationService notificationService;
+	
 	/**
 	 *This method is used to create an account
 	 * @param accountDTO First param which holds account details
@@ -87,7 +93,36 @@ public class FriendsManagementController {
 	}
 	
 	
-
-
-
+	/**
+	 *This method is used to subscribe to updates
+	 * @param notificationDTO Holds requester and target details for notification
+	 * @return ResponseDTO 
+	 */
+	@PostMapping("/subscribe")
+	public ResponseDTO subscribe(@RequestBody NotificationDTO notificationDTO) {
+		notificationService.subscribe(notificationDTO);
+		return new ResponseDTO(Boolean.TRUE);
+	}
+	
+	/**
+	 *This method is used to block a user from receiving updates
+	 * @param notificationDTO Holds requester and target details for notification
+	 * @return ResponseDTO 
+	 */
+	@PostMapping("/blockupdate")
+	public ResponseDTO blockUpdates(@RequestBody NotificationDTO notificationDTO) {
+		notificationService.blockUpdates(notificationDTO);
+		return new ResponseDTO(Boolean.TRUE);
+	}
+	
+	/**
+	 *This method is used to fetch all email address which can receive updates for particular user
+	 * @param notificationDTO Holds requester and target details for notification
+	 * @return ResponseDTO 
+	 */
+	@PostMapping("/notify")
+	public NotifyResponseDTO ResponseDTO (@RequestBody NotifyDTO notifyDTO) {
+		List<String> notifiedUsers = notificationService.notify(notifyDTO);
+		return new NotifyResponseDTO(notifiedUsers);
+	}
 }

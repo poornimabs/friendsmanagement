@@ -3,7 +3,7 @@ package org.socialnetwork.apis.friendsmanagement.repository;
 
 import java.util.List;
 
-import org.socialnetwork.apis.friendsmanagement.entity.FriendshipEntity;
+import org.socialnetwork.apis.friendsmanagement.entity.FriendrelationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,7 +17,7 @@ import org.springframework.data.repository.query.Param;
 */
 
 
-public interface FriendConnectionRepository extends JpaRepository<FriendshipEntity, String>{
+public interface FriendConnectionRepository extends JpaRepository<FriendrelationEntity, String>{
 	
 	/**
      * @param user
@@ -27,7 +27,7 @@ public interface FriendConnectionRepository extends JpaRepository<FriendshipEnti
     List<String> getFriends(@Param("user") final String user);
     
     /**
-     * @param user
+     * @param userone usertwo
      * @return List of friends for a user
      */
     @Query(nativeQuery = true)

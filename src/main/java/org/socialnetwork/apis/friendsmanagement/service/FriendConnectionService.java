@@ -6,7 +6,7 @@ import org.socialnetwork.apis.friendsmanagement.dto.FriendConnectionDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.UserEmailDTO;
 
 /**
-* REST endpoint for friends management.
+* REST endpoint for friends request service.
 * <p>
 * Provides basic CRUD functionality
 *
@@ -37,8 +37,6 @@ public interface FriendConnectionService {
      * @return Common Friends List for user
      */
 	List<String> commonFriends(FriendConnectionDTO friendConnectionDTO);
-	
-	
 	
 	
 }
