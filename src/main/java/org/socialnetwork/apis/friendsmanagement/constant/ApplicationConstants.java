@@ -16,15 +16,23 @@ public class ApplicationConstants {
 	public static final String RESOURCE_PATH = "/friendsmanagement";
 	
 	/**
-	 * Represents the relationship status - Friend
+	 * Represents the relationship status - Accepted
 	 */
 	public static final int STATUS_ACCEPTED = 1;
 	
 	/**
 	 * Represents the relationship status - Blocked
 	 */
-	public static final int STATUC_BLOCKED = 0;
+	public static final int STATUS_BLOCKED = 0;
 	
 	
+	/**
+	 * Represents the notification status - Aceepted
+	 */
+	public static final int NOTIFY_ACCEPTED = 1;
 
+	/**
+	 * Represents the notification status - Blocked
+	 */
+	public static final int NOTIFY_BLOCKED = 0;
 }
