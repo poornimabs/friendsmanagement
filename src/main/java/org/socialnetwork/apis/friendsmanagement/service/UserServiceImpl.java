@@ -1,7 +1,7 @@
 package org.socialnetwork.apis.friendsmanagement.service;
 
 import org.socialnetwork.apis.friendsmanagement.dto.AccountDTO;
-import org.socialnetwork.apis.friendsmanagement.entity.Users;
+import org.socialnetwork.apis.friendsmanagement.entity.UserEntity;
 import org.socialnetwork.apis.friendsmanagement.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,8 +24,8 @@ public class UserServiceImpl implements UserService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Users account(AccountDTO accountDTO) {
-		return userRepository.save(new Users(accountDTO.getEmail(), 
+	public UserEntity account(AccountDTO accountDTO) {
+		return userRepository.save(new UserEntity(accountDTO.getEmail(), 
 				accountDTO.getUsername(), accountDTO.getPassword()));
 	}
 	

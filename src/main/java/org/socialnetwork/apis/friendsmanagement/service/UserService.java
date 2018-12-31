@@ -1,7 +1,7 @@
 package org.socialnetwork.apis.friendsmanagement.service;
 
 import org.socialnetwork.apis.friendsmanagement.dto.AccountDTO;
-import org.socialnetwork.apis.friendsmanagement.entity.Users;
+import org.socialnetwork.apis.friendsmanagement.entity.UserEntity;
 
 /**
 * User service to handle adding an account
@@ -18,6 +18,6 @@ public interface UserService {
      * @param friendConnectionDTO
      * @return void
      */
-	Users account(AccountDTO accountDTO); 
+	UserEntity account(AccountDTO accountDTO); 
 
 }

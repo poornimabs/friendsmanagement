@@ -1,6 +1,6 @@
 package org.socialnetwork.apis.friendsmanagement.repository;
 
-import org.socialnetwork.apis.friendsmanagement.entity.Users;
+import org.socialnetwork.apis.friendsmanagement.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -12,6 +12,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 */
 
 
-public interface UsersRepository extends JpaRepository<Users, String>{
+public interface UsersRepository extends JpaRepository<UserEntity, String>{
 
 }

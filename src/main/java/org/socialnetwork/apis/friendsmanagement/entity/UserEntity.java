@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
 * Entity class for Users
@@ -13,8 +14,10 @@ import javax.persistence.Id;
 * @since   1.0 
 */
 
-@Entity
-public class Users implements Serializable{
+@Entity(name="UserEntity")
+@Table (name="user")
+
+public class UserEntity implements Serializable{
 	private static final long serialVersionUID = 4611252234581144064L;
 
 	@Id
@@ -24,11 +27,11 @@ public class Users implements Serializable{
 	
 	private String password;
 	
-	public Users() {
+	public UserEntity() {
 		
 	}
 
-	public Users(String email, String username, String password) {
+	public UserEntity(String email, String username, String password) {
 		super();
 		this.email = email;
 		this.username = username;

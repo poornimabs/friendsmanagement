@@ -75,6 +75,17 @@ public class FriendsManagementController {
 		return new FriendsListDTO(friendsList);
 	}
 	
+	/**
+	 *This method is used to get friends list with user emailId
+	 * @param UserEmailDTO First param which holds user email id
+	 * @return FriendsListDTO 
+	 */
+	@PostMapping("/common")
+	public FriendsListDTO commonFriends(@RequestBody FriendConnectionDTO friendConnectionDTO) {
+		List<String> commonFriendsList = friendConnectionService.commonFriends(friendConnectionDTO);
+		return new FriendsListDTO(commonFriendsList);
+	}
+	
 	
 
 

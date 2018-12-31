@@ -25,9 +25,20 @@ public interface FriendConnectionService {
 	void friendConnection(FriendConnectionDTO friendConnectionDTO);
 	
 	/**
-	 * This methos is used to get friends list wrt single user
+	 * This method is used to get friends list wrt single user
      * @param userEmailDTO
      * @return Friends List for user
      */
 	List<String> friendsList(UserEmailDTO userEmailDTO);
+	
+	/**
+	 * This method is used to get common friends list between users
+     * @param friendConnectionDTO
+     * @return Common Friends List for user
+     */
+	List<String> commonFriends(FriendConnectionDTO friendConnectionDTO);
+	
+	
+	
+	
 }
