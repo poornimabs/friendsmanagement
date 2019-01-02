@@ -1,7 +1,7 @@
 package org.socialnetwork.apis.friendsmanagement.exception;
 
 import java.sql.SQLException;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import org.socialnetwork.apis.friendsmanagement.constant.ApplicationExceptionConstants;
 import org.socialnetwork.apis.friendsmanagement.dto.GenericExceptionResponseDTO;
@@ -42,7 +42,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 	@ExceptionHandler(RecordNotFoundException.class)
 	public final ResponseEntity<Object> handleRecordNotFoundException(RecordNotFoundException exception,
 			WebRequest request) {
-		GenericExceptionResponseDTO exceptionResponse = new GenericExceptionResponseDTO(new Date(), 
+		GenericExceptionResponseDTO exceptionResponse = new GenericExceptionResponseDTO(LocalDateTime.now(), 
+				HttpStatus.NOT_FOUND,
 				exception.getMessage(),
 				request.getDescription(false));
 		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
@@ -51,7 +52,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 	@ExceptionHandler(UserDataInvalidException.class)
 	public final ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		GenericExceptionResponseDTO exceptionResponse = new GenericExceptionResponseDTO(new Date(), 
+		GenericExceptionResponseDTO exceptionResponse = new GenericExceptionResponseDTO(LocalDateTime.now(), 
+				status,
 				ApplicationExceptionConstants.VALIDATION_FAILED,
 				ex.getBindingResult().toString());
 		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.BAD_REQUEST);
