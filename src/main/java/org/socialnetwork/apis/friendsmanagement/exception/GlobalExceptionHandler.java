@@ -49,14 +49,43 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
 	}
 
-	@ExceptionHandler(UserDataInvalidException.class)
+	@ExceptionHandler(DataInvalidException.class)
 	public final ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		GenericExceptionResponseDTO exceptionResponse = new GenericExceptionResponseDTO(LocalDateTime.now(), 
 				status,
-				ApplicationExceptionConstants.VALIDATION_FAILED,
+				ApplicationExceptionConstants.USER_VALIDATION_FAILED,
 				ex.getBindingResult().toString());
 		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	} 
 	
+	@ExceptionHandler(UserAccountDoesNotExists.class)
+	public final ResponseEntity<Object> handleUserDoesNotExistsException(UserAccountDoesNotExists exception,
+			WebRequest request) {
+		GenericExceptionResponseDTO exceptionResponse = new GenericExceptionResponseDTO(LocalDateTime.now(), 
+				HttpStatus.NOT_FOUND,
+				exception.getMessage(),
+				request.getDescription(false));
+		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(FriendConnectionException.class)
+	public final ResponseEntity<Object> handleFriendConnectionException(FriendConnectionException exception,
+			WebRequest request) {
+		GenericExceptionResponseDTO exceptionResponse = new GenericExceptionResponseDTO(LocalDateTime.now(), 
+				HttpStatus.CONFLICT,
+				exception.getMessage(),
+				request.getDescription(false));
+		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.CONFLICT);
+	}
+	
+	@ExceptionHandler(BlockedFriendshipException.class)
+	public final ResponseEntity<Object> handleBlockedFriendShipException(BlockedFriendshipException exception,
+			WebRequest request) {
+		GenericExceptionResponseDTO exceptionResponse = new GenericExceptionResponseDTO(LocalDateTime.now(), 
+				HttpStatus.EXPECTATION_FAILED,
+				exception.getMessage(),
+				request.getDescription(false));
+		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.EXPECTATION_FAILED);
+	}
 }
