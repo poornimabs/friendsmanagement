@@ -89,8 +89,8 @@ public class FriendsManagementController {
 	}
 
 	/**
-	 *This method is used to get friends list with user emailId
-	 * @param UserEmailDTO First param which holds user email id
+	 *This method is used to get common friends list between two users
+	 * @param FriendConnectionDTO holds user email id
 	 * @return FriendsListDTO 
 	 */
 	@PostMapping("/common")

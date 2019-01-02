@@ -29,5 +29,13 @@ public interface NotificationRepository extends JpaRepository<NotificationEntity
      */
     List<String> getBlockedUsersForUpdates(@Param("userone") final String userone, 
     		@Param("usertwo") final String usertwo, @Param("status") final int status);
+    
+    /**
+     * @param user
+     * @return Checks whether already subscribed for updates
+     */
+    List<String> getExistingSubsscribe(@Param("requestor") final String requestor, 
+    		@Param("target") final String target, 
+    		@Param("status") final int status);
 
 }

@@ -31,10 +31,10 @@ public class FriendRelationServiceImpl implements FriendRelationService{
 
 	@Autowired
 	FriendConnectionRepository friendConnectionRepository;
-	
+
 	@Autowired
 	UsersRepository userRepository;
-	
+
 	@Autowired
 	NotificationRepository notificationRepository;
 
@@ -44,7 +44,6 @@ public class FriendRelationServiceImpl implements FriendRelationService{
 	@Override
 	public void friendRelation(FriendConnectionDTO friendConnectionDTO) {
 		friendConnectionValidation(friendConnectionDTO);
-
 	}
 
 	/**
@@ -52,6 +51,10 @@ public class FriendRelationServiceImpl implements FriendRelationService{
 	 */
 	@Override
 	public List<String> friendsList(UserEmailDTO userEmailDTO) {
+		String userCount = userRepository.getSingleUser(userEmailDTO.getEmail());
+		if(Integer.parseInt(userCount)<2) {
+			throw new UserAccountDoesNotExists(ApplicationExceptionConstants.USER_ACCOUNT_NOT_EXISTS);
+		}
 		List<String> friendsList = friendConnectionRepository.getFriends(userEmailDTO.getEmail());
 		return friendsList;
 	}
@@ -61,16 +64,63 @@ public class FriendRelationServiceImpl implements FriendRelationService{
 	 */
 	@Override
 	public List<String> commonFriends(FriendConnectionDTO friendConnectionDTO) {
+		commonValidations(friendConnectionDTO);
 		List<String> friendsList = friendConnectionRepository.getCommonFriends(friendConnectionDTO.getFriends().get(0), 
 				friendConnectionDTO.getFriends().get(1));
 		return friendsList;
 	}
-    
+
 	/**
-	 * Validates for Exception Handling
+	 * Validates for Resource and creates friend connection
 	 * @param friendConnectionDTO
+	 * @return void
 	 */
 	private void friendConnectionValidation(FriendConnectionDTO friendConnectionDTO) {
+		resourceValidations(friendConnectionDTO);
+		friendConnectionRepository.save(new FriendrelationEntity(friendConnectionDTO.getFriends().get(0),
+				friendConnectionDTO.getFriends().get(1),
+				ApplicationConstants.STATUS_ACCEPTED));
+	}
+
+	/**
+	 * Resource Validations
+	 * Checks for RequestBody Validation
+	 * Checks for valid numbers of users email id sent
+	 * Checks for Email Valid
+	 * Checks for user account exists
+	 * Checks for Status Blocked, Unsubscribed User
+	 * Checks whether friendship already exists
+	 * @param friendConnectionDTO
+	 * @return void
+	 */
+	private void resourceValidations(FriendConnectionDTO friendConnectionDTO) {
+		commonValidations(friendConnectionDTO);
+		List<String> friendShipBlocked = notificationRepository.getBlockedUsersForUpdates(
+				friendConnectionDTO.getFriends().get(0),
+				friendConnectionDTO.getFriends().get(1), ApplicationConstants.STATUS_BLOCKED);
+		if(friendShipBlocked.size() > 0) {
+			throw new BlockedFriendshipException(ApplicationExceptionConstants.UNSUBSCRIBED_FRIENDSHIP_BLOCKED);
+		}
+
+		List<String> friendConnection = friendConnectionRepository.getFriendConnection(
+				friendConnectionDTO.getFriends().get(0),
+				friendConnectionDTO.getFriends().get(1), ApplicationConstants.STATUS_ACCEPTED);
+		if(friendConnection.size() > 0) {
+			throw new FriendConnectionException(ApplicationExceptionConstants.FRIENDSHIP_EXISTS);
+		}
+		List<String> blockedFriend = friendConnectionRepository.getFriendConnection(
+				friendConnectionDTO.getFriends().get(0),
+				friendConnectionDTO.getFriends().get(1), ApplicationConstants.STATUS_BLOCKED);
+		if(blockedFriend.size() > 0) {
+			throw new FriendConnectionException(ApplicationExceptionConstants.FRIENDSHIP_BLOCKED);
+		}
+	}
+
+	/**
+	 * Common Validations
+	 * @param friendConnectionDTO
+	 */
+	private void commonValidations(FriendConnectionDTO friendConnectionDTO) {
 		if(friendConnectionDTO.getFriends().isEmpty() || friendConnectionDTO == null) {
 			throw new DataInvalidException(ApplicationExceptionConstants.FRIENDRELATION_VALIDATION_FAILED);
 		}
@@ -82,31 +132,11 @@ public class FriendRelationServiceImpl implements FriendRelationService{
 		if(!validEmail) {
 			throw new DataInvalidException(ApplicationExceptionConstants.INVALID_EMAIL);
 		}
-		
 		String userCount = userRepository.getMultipleUser(friendConnectionDTO.getFriends().get(0), 
 				friendConnectionDTO.getFriends().get(1));
 		if(Integer.parseInt(userCount)<2) {
 			throw new UserAccountDoesNotExists(ApplicationExceptionConstants.USER_ACCOUNT_NOT_EXISTS);
 		}
-		List<String> friendShipBlocked = notificationRepository.getBlockedUsersForUpdates(friendConnectionDTO.getFriends().get(0),
-				friendConnectionDTO.getFriends().get(1), ApplicationConstants.STATUS_BLOCKED);
-		if(friendShipBlocked.size() > 0) {
-			throw new BlockedFriendshipException(ApplicationExceptionConstants.UNSUBSCRIBED_FRIENDSHIP_BLOCKED);
-		}
-		
-		List<String> friendConnection = friendConnectionRepository.getFriendConnection(friendConnectionDTO.getFriends().get(0),
-				friendConnectionDTO.getFriends().get(1), ApplicationConstants.STATUS_ACCEPTED);
-		if(friendConnection.size() > 0) {
-			throw new FriendConnectionException(ApplicationExceptionConstants.FRIENDSHIP_EXISTS);
-		}
-		List<String> blockedFriend = friendConnectionRepository.getFriendConnection(friendConnectionDTO.getFriends().get(0),
-				friendConnectionDTO.getFriends().get(1), ApplicationConstants.STATUS_BLOCKED);
-		if(blockedFriend.size() > 0) {
-			throw new FriendConnectionException(ApplicationExceptionConstants.FRIENDSHIP_BLOCKED);
-		}
-		friendConnectionRepository.save(new FriendrelationEntity(friendConnectionDTO.getFriends().get(0),
-				friendConnectionDTO.getFriends().get(1),
-				ApplicationConstants.STATUS_ACCEPTED));
 	}
-	
+
 }
