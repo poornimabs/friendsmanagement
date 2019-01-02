@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
 
 /**
 * Entity class for Users
@@ -15,16 +17,15 @@ import javax.persistence.Table;
 */
 
 @Entity(name="UserEntity")
-@Table (name="user")
+@Table (name="user",
+		uniqueConstraints = @UniqueConstraint(columnNames = "EMAIL"))
 
 public class UserEntity implements Serializable{
 	private static final long serialVersionUID = 4611252234581144064L;
 
 	@Id
     private String email;
-	
 	private String username;
-	
 	private String password;
 	
 	public UserEntity() {
