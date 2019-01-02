@@ -88,4 +88,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 				request.getDescription(false));
 		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.EXPECTATION_FAILED);
 	}
+	
+	@ExceptionHandler(DuplicateRequestException.class)
+	public final ResponseEntity<Object> handleDuplicateRequestn(DuplicateRequestException exception,
+			WebRequest request) {
+		GenericExceptionResponseDTO exceptionResponse = new GenericExceptionResponseDTO(LocalDateTime.now(), 
+				HttpStatus.CONFLICT,
+				exception.getMessage(),
+				request.getDescription(false));
+		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.CONFLICT);
+	}
 }
