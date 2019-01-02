@@ -59,4 +59,11 @@ public class ApplicationExceptionConstants {
      * Friend Relation Already Exists and Blocked
      */
     public static final String UNSUBSCRIBED_FRIENDSHIP_BLOCKED = "Friend connection request is blocked by the user";
+    
+    /**
+     * Duplicate Request for Subscribing Users
+     */
+    public static final String DUPLICATE_SUBSCRIBED_USERS = "Duplicate subscribe request";
+    
+    
 }
