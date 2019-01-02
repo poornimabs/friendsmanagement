@@ -32,6 +32,11 @@ import javax.persistence.Table;
 			name = "NotificationEntity.getBlockedUsersForUpdates",
 			query = "SELECT requestor FROM notification WHERE"
 					+ " (target = :userone OR target = :usertwo) AND state =:status"
+			),
+	@NamedNativeQuery(
+			name = "NotificationEntity.getExistingSubsscribe",
+			query = "SELECT requestor FROM notification WHERE "
+					+ "(requestor = :requestor AND target = :target) AND state =:status"
 			)
 })
 
