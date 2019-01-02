@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.socialnetwork.apis.friendsmanagement.constant.ApplicationConstants;
+import org.socialnetwork.apis.friendsmanagement.constant.ExceptionConstants;
 import org.socialnetwork.apis.friendsmanagement.dto.AccountDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.FriendConnectionDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.FriendsListDTO;
@@ -13,6 +14,9 @@ import org.socialnetwork.apis.friendsmanagement.dto.NotifyDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.NotifyResponseDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.ResponseDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.UserEmailDTO;
+import org.socialnetwork.apis.friendsmanagement.entity.UserEntity;
+import org.socialnetwork.apis.friendsmanagement.exception.RecordNotFoundException;
+import org.socialnetwork.apis.friendsmanagement.exception.UserDataInvalidException;
 import org.socialnetwork.apis.friendsmanagement.service.FriendConnectionService;
 import org.socialnetwork.apis.friendsmanagement.service.NotificationService;
 import org.socialnetwork.apis.friendsmanagement.service.UserService;
@@ -46,16 +50,19 @@ public class FriendsManagementController {
 
 	@Autowired
 	NotificationService notificationService;
-	
+
 	/**
 	 *This method is used to create an account
 	 * @param accountDTO First param which holds account details
 	 * @return ResponseDTO
 	 */
 	@PostMapping("/account")
-	public ResponseDTO account(@RequestBody AccountDTO accountDTO) {
-		LOG.info("Create account");
-		userService.account(accountDTO);
+	public ResponseDTO account(@RequestBody AccountDTO accountDTO) throws UserDataInvalidException{
+		LOG.info("Create account API request");
+		UserEntity userEntity = userService.account(accountDTO);
+		if(userEntity == null) {
+			throw new UserDataInvalidException(ExceptionConstants.INAVLID_DATA);
+		}
 		return new ResponseDTO(Boolean.TRUE);
 	}
 
@@ -78,9 +85,12 @@ public class FriendsManagementController {
 	@PostMapping("/friends")
 	public FriendsListDTO friends(@RequestBody UserEmailDTO userEmailDTO) {
 		List<String> friendsList = friendConnectionService.friendsList(userEmailDTO);
+		if(friendsList == null) {
+			throw new RecordNotFoundException(ExceptionConstants.RECORD_NOT_FOUND);
+		}
 		return new FriendsListDTO(friendsList);
 	}
-	
+
 	/**
 	 *This method is used to get friends list with user emailId
 	 * @param UserEmailDTO First param which holds user email id
@@ -89,10 +99,12 @@ public class FriendsManagementController {
 	@PostMapping("/common")
 	public FriendsListDTO commonFriends(@RequestBody FriendConnectionDTO friendConnectionDTO) {
 		List<String> commonFriendsList = friendConnectionService.commonFriends(friendConnectionDTO);
+		if(commonFriendsList == null) {
+			throw new RecordNotFoundException(ExceptionConstants.NO_COMMON_FRIENDS);
+		}
 		return new FriendsListDTO(commonFriendsList);
 	}
-	
-	
+
 	/**
 	 *This method is used to subscribe to updates
 	 * @param notificationDTO Holds requester and target details for notification
@@ -103,7 +115,7 @@ public class FriendsManagementController {
 		notificationService.subscribe(notificationDTO);
 		return new ResponseDTO(Boolean.TRUE);
 	}
-	
+
 	/**
 	 *This method is used to block a user from receiving updates
 	 * @param notificationDTO Holds requester and target details for notification
@@ -114,15 +126,18 @@ public class FriendsManagementController {
 		notificationService.blockUpdates(notificationDTO);
 		return new ResponseDTO(Boolean.TRUE);
 	}
-	
+
 	/**
 	 *This method is used to fetch all email address which can receive updates for particular user
 	 * @param notificationDTO Holds requester and target details for notification
-	 * @return ResponseDTO 
+	 * @return NotifyResponseDTO 
 	 */
 	@PostMapping("/notify")
 	public NotifyResponseDTO ResponseDTO (@RequestBody NotifyDTO notifyDTO) {
 		List<String> notifiedUsers = notificationService.notify(notifyDTO);
+		if(notifiedUsers == null) {
+			throw new RecordNotFoundException(ExceptionConstants.RECORD_NOT_FOUND);
+		}
 		return new NotifyResponseDTO(notifiedUsers);
 	}
 }
