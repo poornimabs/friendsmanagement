@@ -10,13 +10,13 @@ import java.util.Date;
  * @since   1.0 
  */
 
-public class GenericExceptionResponse {
+public class GenericExceptionResponseDTO {
 
 	private Date timestamp;
 	private String message;
 	private String details;
 
-	public GenericExceptionResponse(Date timestamp, String message, String details) {
+	public GenericExceptionResponseDTO(Date timestamp, String message, String details) {
 		super();
 		this.timestamp = timestamp;
 		this.message = message;
