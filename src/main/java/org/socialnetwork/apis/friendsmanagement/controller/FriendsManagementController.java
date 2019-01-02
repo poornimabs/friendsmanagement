@@ -2,10 +2,12 @@ package org.socialnetwork.apis.friendsmanagement.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.socialnetwork.apis.friendsmanagement.constant.ApplicationConstants;
-import org.socialnetwork.apis.friendsmanagement.constant.ExceptionConstants;
+import org.socialnetwork.apis.friendsmanagement.constant.ApplicationExceptionConstants;
 import org.socialnetwork.apis.friendsmanagement.dto.AccountDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.FriendConnectionDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.FriendsListDTO;
@@ -14,9 +16,7 @@ import org.socialnetwork.apis.friendsmanagement.dto.NotifyDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.NotifyResponseDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.ResponseDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.UserEmailDTO;
-import org.socialnetwork.apis.friendsmanagement.entity.UserEntity;
 import org.socialnetwork.apis.friendsmanagement.exception.RecordNotFoundException;
-import org.socialnetwork.apis.friendsmanagement.exception.UserDataInvalidException;
 import org.socialnetwork.apis.friendsmanagement.service.FriendConnectionService;
 import org.socialnetwork.apis.friendsmanagement.service.NotificationService;
 import org.socialnetwork.apis.friendsmanagement.service.UserService;
@@ -57,12 +57,9 @@ public class FriendsManagementController {
 	 * @return ResponseDTO
 	 */
 	@PostMapping("/account")
-	public ResponseDTO account(@RequestBody AccountDTO accountDTO) throws UserDataInvalidException{
+	public ResponseDTO account(@Valid @RequestBody AccountDTO accountDTO){
 		LOG.info("Create account API request");
-		UserEntity userEntity = userService.account(accountDTO);
-		if(userEntity == null) {
-			throw new UserDataInvalidException(ExceptionConstants.INAVLID_DATA);
-		}
+		userService.account(accountDTO);
 		return new ResponseDTO(Boolean.TRUE);
 	}
 
@@ -86,7 +83,7 @@ public class FriendsManagementController {
 	public FriendsListDTO friends(@RequestBody UserEmailDTO userEmailDTO) {
 		List<String> friendsList = friendConnectionService.friendsList(userEmailDTO);
 		if(friendsList == null) {
-			throw new RecordNotFoundException(ExceptionConstants.RECORD_NOT_FOUND);
+			throw new RecordNotFoundException(ApplicationExceptionConstants.RECORD_NOT_FOUND);
 		}
 		return new FriendsListDTO(friendsList);
 	}
@@ -100,7 +97,7 @@ public class FriendsManagementController {
 	public FriendsListDTO commonFriends(@RequestBody FriendConnectionDTO friendConnectionDTO) {
 		List<String> commonFriendsList = friendConnectionService.commonFriends(friendConnectionDTO);
 		if(commonFriendsList == null) {
-			throw new RecordNotFoundException(ExceptionConstants.NO_COMMON_FRIENDS);
+			throw new RecordNotFoundException(ApplicationExceptionConstants.NO_COMMON_FRIENDS);
 		}
 		return new FriendsListDTO(commonFriendsList);
 	}
@@ -136,7 +133,7 @@ public class FriendsManagementController {
 	public NotifyResponseDTO ResponseDTO (@RequestBody NotifyDTO notifyDTO) {
 		List<String> notifiedUsers = notificationService.notify(notifyDTO);
 		if(notifiedUsers == null) {
-			throw new RecordNotFoundException(ExceptionConstants.RECORD_NOT_FOUND);
+			throw new RecordNotFoundException(ApplicationExceptionConstants.RECORD_NOT_FOUND);
 		}
 		return new NotifyResponseDTO(notifiedUsers);
 	}
