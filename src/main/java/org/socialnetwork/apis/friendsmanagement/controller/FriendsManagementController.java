@@ -80,7 +80,7 @@ public class FriendsManagementController {
 	 * @return FriendsListDTO 
 	 */
 	@PostMapping("/friends")
-	public FriendsListDTO friends(@RequestBody UserEmailDTO userEmailDTO) {
+	public FriendsListDTO friends(@Valid @RequestBody UserEmailDTO userEmailDTO) {
 		List<String> friendsList = friendConnectionService.friendsList(userEmailDTO);
 		if(friendsList == null) {
 			throw new RecordNotFoundException(ApplicationExceptionConstants.RECORD_NOT_FOUND);
