@@ -32,5 +32,13 @@ public interface FriendConnectionRepository extends JpaRepository<Friendrelation
      */
     @Query(nativeQuery = true)
     List<String> getCommonFriends(@Param("userone") final String userone, @Param("usertwo") final String usertwo);
+    
+    /**
+     * @param userone usertwo
+     * @return Friends Connections
+     */
+    @Query(nativeQuery = true)
+    List<String> getFriendConnection(@Param("userone") final String userone, 
+    		@Param("usertwo") final String usertwo, @Param("friendship") final int friendship);
 	
 }

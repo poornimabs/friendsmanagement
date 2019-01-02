@@ -22,5 +22,12 @@ public interface NotificationRepository extends JpaRepository<NotificationEntity
      */
     @Query(nativeQuery = true)
     List<String> getNotifiedUsers(@Param("user") final String user);
+    
+    /**
+     * @param user
+     * @return List of Users Blocked
+     */
+    List<String> getBlockedUsersForUpdates(@Param("userone") final String userone, 
+    		@Param("usertwo") final String usertwo, @Param("status") final int status);
 
 }
