@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.Table;
 
@@ -20,12 +21,20 @@ import javax.persistence.Table;
 @Entity(name="NotificationEntity")
 @Table (name="notification")
 
-@NamedNativeQuery(
-		name = "NotificationEntity.getNotifiedUsers",
-		query = "SELECT user_two friend FROM friendrelation WHERE user_one = :user and status=1" + " UNION "
-				+ "SELECT user_one friend FROM friendrelation WHERE user_two = :user and status=1" + " UNION "
-				+ "SELECT requestor friend FROM notification WHERE target = :user AND state = 1"
-		)
+@NamedNativeQueries({
+	@NamedNativeQuery(
+			name = "NotificationEntity.getNotifiedUsers",
+			query = "SELECT user_two friend FROM friendrelation WHERE user_one = :user and status=1" + " UNION "
+					+ "SELECT user_one friend FROM friendrelation WHERE user_two = :user and status=1" + " UNION "
+					+ "SELECT requestor friend FROM notification WHERE target = :user AND state = 1"
+			),
+	@NamedNativeQuery(
+			name = "NotificationEntity.getBlockedUsersForUpdates",
+			query = "SELECT requestor FROM notification WHERE"
+					+ " (target = :userone OR target = :usertwo) AND state =:status"
+			)
+})
+
 
 public class NotificationEntity implements Serializable{
 

@@ -24,18 +24,24 @@ import javax.persistence.Table;
 @NamedNativeQueries({
 	@NamedNativeQuery(
 			name = "FriendrelationEntity.getFriends",
-			query = "SELECT user_two AS friend FROM friendrelation WHERE user_one =:user and status=1"  + " UNION "
-					+ "SELECT user_one AS friend FROM friendrelation WHERE user_two =:user and status=1"
+			query = "SELECT user_two AS friend FROM friendrelation WHERE user_one =:user AND status=1"  + " UNION "
+					+ "SELECT user_one AS friend FROM friendrelation WHERE user_two =:user AND status=1"
 			),
 	@NamedNativeQuery(
 			name = "FriendrelationEntity.getCommonFriends",
 			query = "SELECT UserOneFriends.id FROM"
-					+ "( SELECT user_two id FROM friendrelation WHERE user_one = :userone and status=1" + " UNION "
-					+ "SELECT user_one id FROM friendrelation WHERE user_two = :userone and status=1)" + " AS UserOneFriends"  
+					+ "( SELECT user_two id FROM friendrelation WHERE user_one = :userone AND status=1" + " UNION "
+					+ "SELECT user_one id FROM friendrelation WHERE user_two = :userone AND status=1)" + " AS UserOneFriends"  
 					+ " JOIN "
-					+ "( SELECT user_two id FROM friendrelation WHERE user_one = :usertwo and status=1" + " UNION "
-					+ "SELECT user_one id FROM friendrelation WHERE user_two = :usertwo and status=1)" + " AS UserTwoFriends"  
+					+ "( SELECT user_two id FROM friendrelation WHERE user_one = :usertwo AND status=1" + " UNION "
+					+ "SELECT user_one id FROM friendrelation WHERE user_two = :usertwo AND status=1)" + " AS UserTwoFriends"  
 					+ " ON UserOneFriends.id = UserTwoFriends.id"
+			),
+	@NamedNativeQuery(
+			name = "FriendrelationEntity.getFriendConnection",
+			query = "SELECT id FROM friendrelation WHERE "
+					+ "(user_one =:userone AND user_two =:usertwo) OR (user_one =:usertwo AND user_two =:userone) AND status = :friendship" 
+					
 			)
 })
 

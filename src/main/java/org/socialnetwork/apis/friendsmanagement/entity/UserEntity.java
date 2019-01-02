@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -20,6 +22,16 @@ import javax.persistence.UniqueConstraint;
 @Table (name="user",
 		uniqueConstraints = @UniqueConstraint(columnNames = "EMAIL"))
 
+@NamedNativeQueries({
+	@NamedNativeQuery(
+			name = "UserEntity.getMultipleUser",
+			query = "SELECT COUNT(email) FROM user WHERE email =:userone_email OR email =:usertwo_email"
+			),
+	@NamedNativeQuery(
+			name = "UserEntity.getSingleUser",
+			query = "SELECT email FROM user WHERE email =:userone_email"
+			)
+})
 public class UserEntity implements Serializable{
 	private static final long serialVersionUID = 4611252234581144064L;
 
