@@ -1,5 +1,9 @@
 package org.socialnetwork.apis.friendsmanagement.dto;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 /**
 * UserEmailDTO Data Transfer Object
 *
@@ -11,6 +15,9 @@ package org.socialnetwork.apis.friendsmanagement.dto;
 
 public class UserEmailDTO {
 	
+	@NotEmpty(message="Email cannot be an empty string")
+	@NotNull(message="Email cannot be null")
+	@Email(message="Please provide a valid email address")
 	private String email;
 
 	public String getEmail() {
