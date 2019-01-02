@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class FriendConnectionServiceImpl implements FriendConnectionService{
+public class FriendRelationServiceImpl implements FriendRelationService{
 
 	@Autowired
 	FriendConnectionRepository friendConnectionRepository;
@@ -28,7 +28,7 @@ public class FriendConnectionServiceImpl implements FriendConnectionService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void friendConnection(FriendConnectionDTO friendConnectionDTO) {
+	public void friendRelation(FriendConnectionDTO friendConnectionDTO) {
 		String personOne = friendConnectionDTO.getFriends().get(0);
 		String personTwo = friendConnectionDTO.getFriends().get(1);
 		friendConnectionRepository.save(new FriendrelationEntity(personOne,personTwo,

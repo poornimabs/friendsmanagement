@@ -15,14 +15,14 @@ import org.socialnetwork.apis.friendsmanagement.dto.UserEmailDTO;
 * @since   1.0 
 */
 
-public interface FriendConnectionService {
+public interface FriendRelationService {
 
 	/**
 	 * This method is used to create a friendship b/w two users
      * @param friendConnectionDTO
      * @return void
      */
-	void friendConnection(FriendConnectionDTO friendConnectionDTO);
+	void friendRelation(FriendConnectionDTO friendConnectionDTO);
 	
 	/**
 	 * This method is used to get friends list wrt single user
