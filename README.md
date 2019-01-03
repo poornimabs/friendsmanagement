@@ -81,36 +81,36 @@ The app will start running at <http://localhost:8090>.
 
 ### Explore API Endpoints
 
-*** API to create a user account ***
+API to create a user account 
 ```
 POST /friendsmanagement/account
 ```
-*** API to create a friend connection between two email addresses. ***
+API to create a friend connection between two email addresses.
 ```
 POST /friendsmanagement/friendconnection
 ```
     
-*** API to retrieve the friends list for an email address. ***   
+API to retrieve the friends list for an email address.    
 ```
 POST /friendsmanagement/friends
 ```
     
-*** API to retrieve the common friends list between two email addresses. ***  
+API to retrieve the common friends list between two email addresses.  
 ```
 POST /friendsmanagement/common
 ``` 
 
-*** API to subscribe to updates from an email address. ***
+API to subscribe to updates from an email address. 
 ```
 POST /friendsmanagement/subscribe
 ``` 
 
-*** API to block updates from an email address. ***   
+API to block updates from an email address.  
 ```
 POST /friendsmanagement/blockupdate
 ```  
 
-*** API to retrieve all email addresses that can receive updates from an email address. ***   
+API to retrieve all email addresses that can receive updates from an email address.   
 ```
 POST /friendsmanagement/notify
 ```  
@@ -119,5 +119,5 @@ POST /friendsmanagement/notify
 ## Database
 Below is the simple ER Diagram used for the application.
 
-![DB Diagram](https://github.com/poornimabs/friendsmanagement/DB_Design.svg)
+![DB Diagram](https://github.com/poornimabs/friendsmanagement/DB_DESIGN.svg)
 
