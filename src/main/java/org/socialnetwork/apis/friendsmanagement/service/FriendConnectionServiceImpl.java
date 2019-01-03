@@ -54,7 +54,7 @@ public class FriendConnectionServiceImpl implements FriendConnectionService{
 	public List<String> friendsList(UserEmailDTO userEmailDTO) {
 		String userEmail = userRepository.getSingleUser(userEmailDTO.getEmail());
 		if(userEmail == null) {
-			throw new UserAccountDoesNotExists(ApplicationExceptionConstants.USER_ACCOUNT_NOT_EXISTS);
+			throw new UserAccountDoesNotExists(ApplicationExceptionConstants.USER_ACCOUNT_DOES_NOT_EXISTS);
 		}
 		List<String> friendsList = friendConnectionRepository.getFriends(userEmailDTO.getEmail());
 		if(friendsList.size() == 0) {
@@ -109,16 +109,16 @@ public class FriendConnectionServiceImpl implements FriendConnectionService{
 			throw new BlockedFriendshipException(ApplicationExceptionConstants.UNSUBSCRIBED_FRIENDSHIP_BLOCKED);
 		}
 
-		List<String> friendConnection = friendConnectionRepository.getFriendConnection(
+		Long friendShipExists = friendConnectionRepository.getFriendConnection(
 				friendConnectionDTO.getFriends().get(0),
 				friendConnectionDTO.getFriends().get(1), ApplicationConstants.STATUS_ACCEPTED);
-		if(friendConnection.size() > 0) {
+		if(friendShipExists != null) {
 			throw new FriendConnectionException(ApplicationExceptionConstants.FRIENDSHIP_EXISTS);
 		}
-		List<String> blockedFriend = friendConnectionRepository.getFriendConnection(
+		Long blockedFriend = friendConnectionRepository.getFriendConnection(
 				friendConnectionDTO.getFriends().get(0),
 				friendConnectionDTO.getFriends().get(1), ApplicationConstants.STATUS_BLOCKED);
-		if(blockedFriend.size() > 0) {
+		if(blockedFriend != null) {
 			throw new FriendConnectionException(ApplicationExceptionConstants.FRIENDSHIP_BLOCKED);
 		}
 	}
@@ -142,7 +142,7 @@ public class FriendConnectionServiceImpl implements FriendConnectionService{
 		String userCount = userRepository.getMultipleUser(friendConnectionDTO.getFriends().get(0), 
 				friendConnectionDTO.getFriends().get(1));
 		if(Integer.parseInt(userCount)<2) {
-			throw new UserAccountDoesNotExists(ApplicationExceptionConstants.USER_ACCOUNT_NOT_EXISTS);
+			throw new UserAccountDoesNotExists(ApplicationExceptionConstants.USER_ACCOUNT_DOES_NOT_EXISTS);
 		}
 	}
 

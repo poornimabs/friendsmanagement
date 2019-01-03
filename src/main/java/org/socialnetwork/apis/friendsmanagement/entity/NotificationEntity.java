@@ -26,16 +26,16 @@ import javax.persistence.Table;
 			name = "NotificationEntity.getNotifiedUsers",
 			query = "SELECT user_two friend FROM friendrelation WHERE user_one = :user and status=1" + " UNION "
 					+ "SELECT user_one friend FROM friendrelation WHERE user_two = :user and status=1" + " UNION "
-					+ "SELECT requestor friend FROM notification WHERE target = :user AND state = 1"
+					+ "SELECT requestor friend FROM subscribe WHERE target = :user AND state = 1"
 			),
 	@NamedNativeQuery(
 			name = "NotificationEntity.getBlockedUsersForUpdates",
-			query = "SELECT requestor FROM notification WHERE"
+			query = "SELECT requestor FROM subscribe WHERE"
 					+ " (target = :userone OR target = :usertwo) AND state =:status"
 			),
 	@NamedNativeQuery(
 			name = "NotificationEntity.getExistingSubscribe",
-			query = "SELECT requestor FROM notification WHERE "
+			query = "SELECT requestor FROM subscribe WHERE "
 					+ "(requestor = :requestor AND target = :target) AND state =:status"
 			)
 })

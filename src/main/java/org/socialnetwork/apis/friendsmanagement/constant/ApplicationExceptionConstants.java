@@ -53,7 +53,7 @@ public class ApplicationExceptionConstants {
     /**
      * User Account Not Exists
      */
-    public static final String USER_ACCOUNT_NOT_EXISTS = "Please register the user";
+    public static final String USER_ACCOUNT_DOES_NOT_EXISTS = "Please register the user";
     
     /**
      * Friend Relation Already Exists and Blocked

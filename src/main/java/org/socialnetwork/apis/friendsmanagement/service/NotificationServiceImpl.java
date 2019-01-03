@@ -8,6 +8,7 @@ import org.socialnetwork.apis.friendsmanagement.dto.NotificationDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.NotifyDTO;
 import org.socialnetwork.apis.friendsmanagement.entity.NotificationEntity;
 import org.socialnetwork.apis.friendsmanagement.exception.DuplicateRequestException;
+import org.socialnetwork.apis.friendsmanagement.exception.RecordNotFoundException;
 import org.socialnetwork.apis.friendsmanagement.exception.UserAccountDoesNotExists;
 import org.socialnetwork.apis.friendsmanagement.repository.FriendConnectionRepository;
 import org.socialnetwork.apis.friendsmanagement.repository.NotificationRepository;
@@ -40,12 +41,27 @@ public class NotificationServiceImpl implements NotificationService{
 	 */
 	@Override
 	public void subscribe(NotificationDTO notificationDTO) {
-		validationsHandler(notificationDTO, ApplicationConstants.STATUS_ACCEPTED);
 		validationHandlerForMultipleUserExists(notificationDTO);
-		notificationRepository.save(new NotificationEntity(
-				notificationDTO.getRequestor(),
-				notificationDTO.getTarget(),
-				ApplicationConstants.NOTIFY_ACCEPTED));
+		validationsHandler(notificationDTO, ApplicationConstants.STATUS_ACCEPTED, 
+				ApplicationConstants.ACCEPTED_TYPE);
+		boolean updateRequired = validationsHandler(notificationDTO, ApplicationConstants.STATUS_BLOCKED, 
+				ApplicationConstants.ACCEPTED_TYPE);
+		if(updateRequired) {
+			//Entry already exists requires status change
+			notificationRepository.updateSubscribeStatus(ApplicationConstants.NOTIFY_ACCEPTED,
+					notificationDTO.getRequestor(), notificationDTO.getTarget());
+		}else {
+			notificationRepository.save(new NotificationEntity(
+					notificationDTO.getRequestor(),
+					notificationDTO.getTarget(),
+					ApplicationConstants.NOTIFY_ACCEPTED));
+		}
+		Long userId = friendConnectionRepository.getFriendConnection(notificationDTO.getRequestor(),
+				notificationDTO.getTarget(), ApplicationConstants.STATUS_BLOCKED);
+		if(userId != null) {
+			friendConnectionRepository.updateStatus(ApplicationConstants.STATUS_ACCEPTED, userId);
+		}
+		
 	}
 
 	/**
@@ -53,12 +69,26 @@ public class NotificationServiceImpl implements NotificationService{
 	 */
 	@Override
 	public void blockUpdates(NotificationDTO notificationDTO) {
-		validationsHandler(notificationDTO, ApplicationConstants.STATUS_BLOCKED);
 		validationHandlerForMultipleUserExists(notificationDTO);
-		notificationRepository.save(new NotificationEntity(
-				notificationDTO.getRequestor(),
-				notificationDTO.getTarget(),
-				ApplicationConstants.NOTIFY_BLOCKED));
+		validationsHandler(notificationDTO, ApplicationConstants.STATUS_BLOCKED,
+				ApplicationConstants.BLOCKED_TYPE);
+		boolean updateRequired = validationsHandler(notificationDTO, ApplicationConstants.STATUS_ACCEPTED, 
+				ApplicationConstants.BLOCKED_TYPE);
+		if(updateRequired) {
+			//Entry already exists requires status change
+			notificationRepository.updateSubscribeStatus(ApplicationConstants.NOTIFY_BLOCKED,
+					notificationDTO.getRequestor(), notificationDTO.getTarget());
+		}else {
+			notificationRepository.save(new NotificationEntity(
+					notificationDTO.getRequestor(),
+					notificationDTO.getTarget(),
+					ApplicationConstants.NOTIFY_BLOCKED));
+		}
+		Long userId = friendConnectionRepository.getFriendConnection(notificationDTO.getRequestor(),
+				notificationDTO.getTarget(), ApplicationConstants.STATUS_ACCEPTED);
+		if(userId != null) {
+			friendConnectionRepository.updateStatus(ApplicationConstants.STATUS_BLOCKED, userId);
+		}
 	}
 
 	/**
@@ -68,9 +98,12 @@ public class NotificationServiceImpl implements NotificationService{
 	public List<String> notify(NotifyDTO notifyDTO) {
 		validationHandlerForUserExists(notifyDTO.getSender());
 		List<String> notifiedUsers = notificationRepository.getNotifiedUsers(notifyDTO.getSender());
+		if(notifiedUsers == null) {
+			throw new RecordNotFoundException(ApplicationExceptionConstants.RECORD_NOT_FOUND);
+		}
 		return notifiedUsers;
 	}
-	
+
 	/**
 	 * Validate User Existence for Multiple User
 	 * @param sender
@@ -79,10 +112,10 @@ public class NotificationServiceImpl implements NotificationService{
 		String userEmailCount = userRepository.getMultipleUser(notificationDTO.getRequestor(), 
 				notificationDTO.getTarget());
 		if(Integer.parseInt(userEmailCount)<2) {
-			throw new UserAccountDoesNotExists(ApplicationExceptionConstants.USER_ACCOUNT_NOT_EXISTS);
+			throw new UserAccountDoesNotExists(ApplicationExceptionConstants.USER_ACCOUNT_DOES_NOT_EXISTS);
 		}
 	}
-	
+
 	/**
 	 * Validate User Existence for Single User
 	 * @param sender
@@ -90,21 +123,26 @@ public class NotificationServiceImpl implements NotificationService{
 	private void validationHandlerForUserExists(String sender){
 		String userEmail = userRepository.getSingleUser(sender);
 		if(userEmail == null) {
-			throw new UserAccountDoesNotExists(ApplicationExceptionConstants.USER_ACCOUNT_NOT_EXISTS);
+			throw new UserAccountDoesNotExists(ApplicationExceptionConstants.USER_ACCOUNT_DOES_NOT_EXISTS);
 		}
 	}
 
 	/**
-	 * Validations before duplicate request
+	 * Validations for duplicate request
 	 * @param notificationDTO
 	 */
-	private void validationsHandler(NotificationDTO notificationDTO, int status) {
+	private boolean validationsHandler(NotificationDTO notificationDTO, int status, int type) {
 		List<String> subscribedUsers = notificationRepository.getExistingSubscribe(notificationDTO.getRequestor(),
 				notificationDTO.getTarget(),
 				status);
 		if(subscribedUsers.size() > 0) {
-			throw new DuplicateRequestException(ApplicationExceptionConstants.DUPLICATE_REQUEST);
+			if(type == status) {
+				throw new DuplicateRequestException(ApplicationExceptionConstants.DUPLICATE_REQUEST);
+			}else if(type != status){
+				return true;
+			}
 		}
+		return false;
 
 	}
 

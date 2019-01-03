@@ -5,8 +5,10 @@ import java.util.List;
 
 import org.socialnetwork.apis.friendsmanagement.entity.FriendrelationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
 * FriendConnection Repository class
@@ -41,6 +43,16 @@ public interface FriendConnectionRepository extends JpaRepository<Friendrelation
      * @return Friends Connections
      */
     @Query(nativeQuery = true)
-    List<String> getFriendConnection(@Param("userone") final String userone, 
+    Long getFriendConnection(@Param("userone") final String userone, 
     		@Param("usertwo") final String usertwo, @Param("friendship") final int friendship);
+    
+    /**
+     * Update status to blocked 
+     * @param blockedstatus
+     * @param blockId
+     */
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE friendrelation SET status = :blockedstatus WHERE id = :blockId", nativeQuery = true)
+    void updateStatus(int blockedstatus , Long blockId);
 }

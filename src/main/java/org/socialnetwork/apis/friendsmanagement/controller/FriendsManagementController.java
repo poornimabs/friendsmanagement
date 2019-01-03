@@ -7,7 +7,6 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.socialnetwork.apis.friendsmanagement.constant.ApplicationConstants;
-import org.socialnetwork.apis.friendsmanagement.constant.ApplicationExceptionConstants;
 import org.socialnetwork.apis.friendsmanagement.dto.AccountDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.FriendConnectionDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.FriendsListDTO;
@@ -16,7 +15,6 @@ import org.socialnetwork.apis.friendsmanagement.dto.NotifyDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.NotifyResponseDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.ResponseDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.UserEmailDTO;
-import org.socialnetwork.apis.friendsmanagement.exception.RecordNotFoundException;
 import org.socialnetwork.apis.friendsmanagement.service.FriendConnectionService;
 import org.socialnetwork.apis.friendsmanagement.service.NotificationService;
 import org.socialnetwork.apis.friendsmanagement.service.UserService;
@@ -145,9 +143,6 @@ public class FriendsManagementController {
 	public NotifyResponseDTO ResponseDTO (@Valid @RequestBody NotifyDTO notifyDTO) {
 		LOG.info("Email addresses that can receive updates from an email address");
 		List<String> notifiedUsers = notificationService.notify(notifyDTO);
-		if(notifiedUsers == null) {
-			throw new RecordNotFoundException(ApplicationExceptionConstants.RECORD_NOT_FOUND);
-		}
 		return new NotifyResponseDTO(notifiedUsers);
 	}
 }

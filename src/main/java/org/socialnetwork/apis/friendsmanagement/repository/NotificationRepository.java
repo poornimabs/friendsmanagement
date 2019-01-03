@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.socialnetwork.apis.friendsmanagement.entity.NotificationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
 * Notification Repository
@@ -37,5 +39,16 @@ public interface NotificationRepository extends JpaRepository<NotificationEntity
     List<String> getExistingSubscribe(@Param("requestor") final String requestor, 
     		@Param("target") final String target, 
     		@Param("status") final int status);
+    
+    /**
+     * Update status
+     * @param blockedstatus
+     * @param blockId
+     */
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE subscribe SET state = :state WHERE requestor = :requestor && target = :target", 
+    nativeQuery = true)
+    void updateSubscribeStatus(int state , String requestor, String target);
 
 }

@@ -25,9 +25,18 @@ public class ApplicationConstants {
 	 */
 	public static final int STATUS_BLOCKED = 0;
 	
+	/**
+	 * Accepted type to check for updates
+	 */
+	public static final int ACCEPTED_TYPE = 1;
 	
 	/**
-	 * Represents the notification status - Aceepted
+	 * Blocked type to check for updates
+	 */
+	public static final int BLOCKED_TYPE = 0;
+	
+	/**
+	 * Represents the notification status - Accepted
 	 */
 	public static final int NOTIFY_ACCEPTED = 1;
 
