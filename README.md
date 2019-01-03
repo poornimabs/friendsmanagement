@@ -119,5 +119,5 @@ POST /friendsmanagement/notify
 ## Database
 Below is the simple ER Diagram used for the application.
 
-![DB Diagram](https://github.com/poornimabs/friendsmanagement//blob/master/DB_DESIGN.svg)
+![DB Diagram](https://github.com/poornimabs/friendsmanagement//blob/master/DB_DESIGN.png)
 
