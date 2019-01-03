@@ -63,7 +63,7 @@ public class FriendsManagementController {
 	@ApiOperation(value = "API to create user account",response = ResponseDTO.class)
 	@PostMapping("/account")
 	public ResponseDTO account(@Valid @RequestBody AccountDTO accountDTO){
-		LOG.info("Create account API request");
+		LOG.info("Create user account");
 		userService.account(accountDTO);
 		return new ResponseDTO(Boolean.TRUE);
 	}
@@ -76,6 +76,7 @@ public class FriendsManagementController {
 	@ApiOperation(value = "API to create a friend connection between two email address", response = ResponseDTO.class)
 	@PostMapping("/friendconnection")
 	public ResponseDTO friendconnection(@RequestBody FriendConnectionDTO friendConnectionDTO) {
+		LOG.info("Create a friend connection between two email address");
 		friendConnectionService.friendconnection(friendConnectionDTO);
 		return new ResponseDTO(Boolean.TRUE);
 	}
@@ -88,6 +89,7 @@ public class FriendsManagementController {
 	@ApiOperation(value = "API to retrieve the friends list for an email address", response = ResponseDTO.class)
 	@PostMapping("/friends")
 	public FriendsListDTO friends(@Valid @RequestBody UserEmailDTO userEmailDTO) {
+		LOG.info("Retrieve the friends list for an email address /friends");
 		List<String> friendsList = friendConnectionService.friendsList(userEmailDTO);
 		return new FriendsListDTO(friendsList);
 	}
@@ -101,6 +103,7 @@ public class FriendsManagementController {
 			"email addresses", response = ResponseDTO.class)
 	@PostMapping("/common")
 	public FriendsListDTO commonFriends(@RequestBody FriendConnectionDTO friendConnectionDTO) {
+		LOG.info("Retrieve common friends list between two email addresses");
 		List<String> commonFriendsList = friendConnectionService.commonFriends(friendConnectionDTO);
 		return new FriendsListDTO(commonFriendsList);
 	}
@@ -113,6 +116,7 @@ public class FriendsManagementController {
 	@ApiOperation(value = "API to subscribe to updates from an email address", response = ResponseDTO.class)
 	@PostMapping("/subscribe")
 	public ResponseDTO subscribe(@Valid @RequestBody NotificationDTO notificationDTO) {
+		LOG.info("Subscribe to updates from an email address");
 		notificationService.subscribe(notificationDTO);
 		return new ResponseDTO(Boolean.TRUE);
 	}
@@ -125,6 +129,7 @@ public class FriendsManagementController {
 	@ApiOperation(value = "API to block updates from an email address", response = ResponseDTO.class)
 	@PostMapping("/blockupdate")
 	public ResponseDTO blockUpdates(@Valid @RequestBody NotificationDTO notificationDTO) {
+		LOG.info("Block updates from an email address");
 		notificationService.blockUpdates(notificationDTO);
 		return new ResponseDTO(Boolean.TRUE);
 	}
@@ -138,6 +143,7 @@ public class FriendsManagementController {
 			"updates from an email address", response = ResponseDTO.class)
 	@PostMapping("/notify")
 	public NotifyResponseDTO ResponseDTO (@Valid @RequestBody NotifyDTO notifyDTO) {
+		LOG.info("Email addresses that can receive updates from an email address");
 		List<String> notifiedUsers = notificationService.notify(notifyDTO);
 		if(notifiedUsers == null) {
 			throw new RecordNotFoundException(ApplicationExceptionConstants.RECORD_NOT_FOUND);
