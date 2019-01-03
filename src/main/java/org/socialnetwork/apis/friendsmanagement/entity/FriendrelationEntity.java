@@ -42,6 +42,12 @@ import javax.persistence.Table;
 			query = "SELECT id FROM friendrelation WHERE "
 					+ "(user_one =:userone AND user_two =:usertwo) OR (user_one =:usertwo AND user_two =:userone) AND status = :friendship" 
 					
+			),
+	@NamedNativeQuery(
+			name = "FriendrelationEntity.updateFrienshipStatus",
+			query = "UPDATE friendrelation SET "
+					+ "status =:blockedstatus WHERE (user_one = :requestor AND user_two = :target) AND status = 1" 
+					
 			)
 })
 
