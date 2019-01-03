@@ -108,7 +108,7 @@ public class FriendsManagementController {
 	 * @return ResponseDTO 
 	 */
 	@PostMapping("/subscribe")
-	public ResponseDTO subscribe(@RequestBody NotificationDTO notificationDTO) {
+	public ResponseDTO subscribe(@Valid @RequestBody NotificationDTO notificationDTO) {
 		notificationService.subscribe(notificationDTO);
 		return new ResponseDTO(Boolean.TRUE);
 	}
@@ -119,7 +119,7 @@ public class FriendsManagementController {
 	 * @return ResponseDTO 
 	 */
 	@PostMapping("/blockupdate")
-	public ResponseDTO blockUpdates(@RequestBody NotificationDTO notificationDTO) {
+	public ResponseDTO blockUpdates(@Valid @RequestBody NotificationDTO notificationDTO) {
 		notificationService.blockUpdates(notificationDTO);
 		return new ResponseDTO(Boolean.TRUE);
 	}
@@ -130,7 +130,7 @@ public class FriendsManagementController {
 	 * @return NotifyResponseDTO 
 	 */
 	@PostMapping("/notify")
-	public NotifyResponseDTO ResponseDTO (@RequestBody NotifyDTO notifyDTO) {
+	public NotifyResponseDTO ResponseDTO (@Valid @RequestBody NotifyDTO notifyDTO) {
 		List<String> notifiedUsers = notificationService.notify(notifyDTO);
 		if(notifiedUsers == null) {
 			throw new RecordNotFoundException(ApplicationExceptionConstants.RECORD_NOT_FOUND);

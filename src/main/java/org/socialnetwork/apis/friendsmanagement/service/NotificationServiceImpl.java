@@ -7,12 +7,10 @@ import org.socialnetwork.apis.friendsmanagement.constant.ApplicationExceptionCon
 import org.socialnetwork.apis.friendsmanagement.dto.NotificationDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.NotifyDTO;
 import org.socialnetwork.apis.friendsmanagement.entity.NotificationEntity;
-import org.socialnetwork.apis.friendsmanagement.exception.DataInvalidException;
 import org.socialnetwork.apis.friendsmanagement.exception.DuplicateRequestException;
 import org.socialnetwork.apis.friendsmanagement.repository.FriendConnectionRepository;
 import org.socialnetwork.apis.friendsmanagement.repository.NotificationRepository;
 import org.socialnetwork.apis.friendsmanagement.repository.UsersRepository;
-import org.socialnetwork.apis.friendsmanagement.utilities.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,6 +51,7 @@ public class NotificationServiceImpl implements NotificationService{
 	 */
 	@Override
 	public void blockUpdates(NotificationDTO notificationDTO) {
+		validationsHandler(notificationDTO);
 		notificationRepository.save(new NotificationEntity(
 				notificationDTO.getRequestor(),
 				notificationDTO.getTarget(),
@@ -73,12 +72,6 @@ public class NotificationServiceImpl implements NotificationService{
 	 * @param notificationDTO
 	 */
 	private void validationsHandler(NotificationDTO notificationDTO) {
-		boolean validEmail = Validator.isEmailValid(notificationDTO.getRequestor(),
-				notificationDTO.getTarget());
-		if(!validEmail) {
-			throw new DataInvalidException(ApplicationExceptionConstants.INVALID_EMAIL);
-		}
-		
 		List<String> subscribedUsers = notificationRepository.getExistingSubsscribe(notificationDTO.getRequestor(), notificationDTO.getTarget(),
 				ApplicationConstants.STATUS_ACCEPTED);
 		if(subscribedUsers.size() > 0) {
