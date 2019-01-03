@@ -42,7 +42,7 @@ public class FriendRelationServiceImpl implements FriendRelationService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void friendRelation(FriendConnectionDTO friendConnectionDTO) {
+	public void friendconnection(FriendConnectionDTO friendConnectionDTO) {
 		friendConnectionValidation(friendConnectionDTO);
 	}
 

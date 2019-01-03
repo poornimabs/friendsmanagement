@@ -20,6 +20,7 @@ import org.springframework.data.repository.query.Param;
 public interface FriendConnectionRepository extends JpaRepository<FriendrelationEntity, String>{
 	
 	/**
+	 * Get Friends wrt to user
      * @param user
      * @return List of friends for a user
      */
@@ -27,6 +28,7 @@ public interface FriendConnectionRepository extends JpaRepository<Friendrelation
     List<String> getFriends(@Param("user") final String user);
     
     /**
+     * Get Common Friends List
      * @param userone usertwo
      * @return List of friends for a user
      */
@@ -34,11 +36,23 @@ public interface FriendConnectionRepository extends JpaRepository<Friendrelation
     List<String> getCommonFriends(@Param("userone") final String userone, @Param("usertwo") final String usertwo);
     
     /**
+     * Get friend connection
      * @param userone usertwo
      * @return Friends Connections
      */
     @Query(nativeQuery = true)
     List<String> getFriendConnection(@Param("userone") final String userone, 
     		@Param("usertwo") final String usertwo, @Param("friendship") final int friendship);
+    
+    /**
+     * Update Friendship Status to Blocked or Accepted
+     * @param status
+     * @param requestor
+     * @param target
+     * @return
+     */
+    @Query(nativeQuery = true)
+    List<String> updateFrienshipStatus(@Param("blockedstatus") final int blockedstatus, 
+    		@Param("requestor") final String requestor, @Param("target") final String target);
 	
 }
