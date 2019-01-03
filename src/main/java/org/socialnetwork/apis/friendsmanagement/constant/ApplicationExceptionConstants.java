@@ -63,7 +63,7 @@ public class ApplicationExceptionConstants {
     /**
      * Duplicate Request for Subscribing Users
      */
-    public static final String DUPLICATE_SUBSCRIBED_USERS = "Duplicate subscribe request";
+    public static final String DUPLICATE_REQUEST = "Duplicate request";
     
     
 }
