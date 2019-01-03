@@ -1,7 +1,9 @@
 package org.socialnetwork.apis.friendsmanagement.service;
 
+import org.socialnetwork.apis.friendsmanagement.constant.ApplicationExceptionConstants;
 import org.socialnetwork.apis.friendsmanagement.dto.AccountDTO;
 import org.socialnetwork.apis.friendsmanagement.entity.UserEntity;
+import org.socialnetwork.apis.friendsmanagement.exception.DuplicateRequestException;
 import org.socialnetwork.apis.friendsmanagement.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,10 @@ public class UserServiceImpl implements UserService{
 	 */
 	@Override
 	public UserEntity account(AccountDTO accountDTO) {
+		String accountEmail = userRepository.getSingleUser(accountDTO.getEmail());
+		if(accountEmail != null) {
+			throw new DuplicateRequestException(ApplicationExceptionConstants.DUPLICATE_ACCOUNT_REQUEST);
+		}
 		return userRepository.save(new UserEntity(accountDTO.getEmail(), 
 				accountDTO.getUsername(), accountDTO.getPassword()));
 	}

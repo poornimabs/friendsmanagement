@@ -65,5 +65,9 @@ public class ApplicationExceptionConstants {
      */
     public static final String DUPLICATE_REQUEST = "Duplicate request";
     
+    /**
+     * Duplicate Account Request
+     */
+    public static final String DUPLICATE_ACCOUNT_REQUEST = "Duplicate account request";
     
 }
