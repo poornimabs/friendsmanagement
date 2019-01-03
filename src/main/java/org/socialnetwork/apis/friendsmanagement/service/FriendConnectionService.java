@@ -14,7 +14,6 @@ import org.socialnetwork.apis.friendsmanagement.dto.UserEmailDTO;
 * @version 1.0
 * @since   1.0 
 */
-
 public interface FriendConnectionService {
 
 	/**

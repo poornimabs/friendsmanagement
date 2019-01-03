@@ -10,6 +10,7 @@ import org.socialnetwork.apis.friendsmanagement.entity.FriendrelationEntity;
 import org.socialnetwork.apis.friendsmanagement.exception.BlockedFriendshipException;
 import org.socialnetwork.apis.friendsmanagement.exception.DataInvalidException;
 import org.socialnetwork.apis.friendsmanagement.exception.FriendConnectionException;
+import org.socialnetwork.apis.friendsmanagement.exception.RecordNotFoundException;
 import org.socialnetwork.apis.friendsmanagement.exception.UserAccountDoesNotExists;
 import org.socialnetwork.apis.friendsmanagement.repository.FriendConnectionRepository;
 import org.socialnetwork.apis.friendsmanagement.repository.NotificationRepository;
@@ -43,7 +44,7 @@ public class FriendConnectionServiceImpl implements FriendConnectionService{
 	 */
 	@Override
 	public void friendconnection(FriendConnectionDTO friendConnectionDTO) {
-		friendConnectionValidation(friendConnectionDTO);
+			friendConnectionValidation(friendConnectionDTO);
 	}
 
 	/**
@@ -51,11 +52,14 @@ public class FriendConnectionServiceImpl implements FriendConnectionService{
 	 */
 	@Override
 	public List<String> friendsList(UserEmailDTO userEmailDTO) {
-		String userCount = userRepository.getSingleUser(userEmailDTO.getEmail());
-		if(Integer.parseInt(userCount)<2) {
+		String userEmail = userRepository.getSingleUser(userEmailDTO.getEmail());
+		if(userEmail == null) {
 			throw new UserAccountDoesNotExists(ApplicationExceptionConstants.USER_ACCOUNT_NOT_EXISTS);
 		}
 		List<String> friendsList = friendConnectionRepository.getFriends(userEmailDTO.getEmail());
+		if(friendsList.size() == 0) {
+			throw new RecordNotFoundException(ApplicationExceptionConstants.NO_FRIEND_CONNECTION);
+		}
 		return friendsList;
 	}
 
@@ -67,6 +71,9 @@ public class FriendConnectionServiceImpl implements FriendConnectionService{
 		commonValidations(friendConnectionDTO);
 		List<String> friendsList = friendConnectionRepository.getCommonFriends(friendConnectionDTO.getFriends().get(0), 
 				friendConnectionDTO.getFriends().get(1));
+		if(friendsList.size() == 0) {
+			throw new RecordNotFoundException(ApplicationExceptionConstants.NO_COMMON_FRIENDS);
+		}
 		return friendsList;
 	}
 
@@ -121,7 +128,7 @@ public class FriendConnectionServiceImpl implements FriendConnectionService{
 	 * @param friendConnectionDTO
 	 */
 	private void commonValidations(FriendConnectionDTO friendConnectionDTO) {
-		if(friendConnectionDTO.getFriends().isEmpty() || friendConnectionDTO == null) {
+		if(friendConnectionDTO.getFriends() == null) {
 			throw new DataInvalidException(ApplicationExceptionConstants.FRIENDRELATION_VALIDATION_FAILED);
 		}
 		if(friendConnectionDTO.getFriends().size()>2 || friendConnectionDTO.getFriends().size()<2) {

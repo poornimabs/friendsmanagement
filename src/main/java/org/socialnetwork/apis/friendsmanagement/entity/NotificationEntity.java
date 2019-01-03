@@ -19,7 +19,7 @@ import javax.persistence.Table;
  */
 
 @Entity(name="NotificationEntity")
-@Table (name="notification")
+@Table (name="subscribe")
 
 @NamedNativeQueries({
 	@NamedNativeQuery(
@@ -34,7 +34,7 @@ import javax.persistence.Table;
 					+ " (target = :userone OR target = :usertwo) AND state =:status"
 			),
 	@NamedNativeQuery(
-			name = "NotificationEntity.getExistingSubsscribe",
+			name = "NotificationEntity.getExistingSubscribe",
 			query = "SELECT requestor FROM notification WHERE "
 					+ "(requestor = :requestor AND target = :target) AND state =:status"
 			)

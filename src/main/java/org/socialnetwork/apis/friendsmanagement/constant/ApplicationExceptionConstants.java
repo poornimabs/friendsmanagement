@@ -22,7 +22,7 @@ public class ApplicationExceptionConstants {
 	/**
 	 * User Request Data Validation Failed
 	 */
-    public static final String USER_VALIDATION_FAILED = "Validation Failed - Invalid Data For User Account Creation";
+    public static final String USER_VALIDATION_FAILED = "Validation Failed - Invalid Data";
     
     /**
 	 * Friend Connection Data Validation
@@ -70,4 +70,8 @@ public class ApplicationExceptionConstants {
      */
     public static final String DUPLICATE_ACCOUNT_REQUEST = "Duplicate account request";
     
+    /**
+     * 
+     */
+    public static final String NO_FRIEND_CONNECTION = "No friend connections exists";
 }

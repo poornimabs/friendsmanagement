@@ -35,8 +35,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 	}
 
 	@ExceptionHandler({SQLException.class,DataAccessException.class})
-	public String databaseError() {
-		return "databaseError";
+	public final ResponseEntity<Object> databaseError(SQLException exception, WebRequest request) {
+		GenericExceptionResponseDTO exceptionResponse = new GenericExceptionResponseDTO(LocalDateTime.now(), 
+				HttpStatus.NOT_FOUND,
+				exception.getMessage(),
+				request.getDescription(false));
+		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
 	}
 
 	@ExceptionHandler(RecordNotFoundException.class)

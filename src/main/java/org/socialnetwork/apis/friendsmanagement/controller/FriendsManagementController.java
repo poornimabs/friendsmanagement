@@ -89,9 +89,6 @@ public class FriendsManagementController {
 	@PostMapping("/friends")
 	public FriendsListDTO friends(@Valid @RequestBody UserEmailDTO userEmailDTO) {
 		List<String> friendsList = friendConnectionService.friendsList(userEmailDTO);
-		if(friendsList == null) {
-			throw new RecordNotFoundException(ApplicationExceptionConstants.RECORD_NOT_FOUND);
-		}
 		return new FriendsListDTO(friendsList);
 	}
 
@@ -105,9 +102,6 @@ public class FriendsManagementController {
 	@PostMapping("/common")
 	public FriendsListDTO commonFriends(@RequestBody FriendConnectionDTO friendConnectionDTO) {
 		List<String> commonFriendsList = friendConnectionService.commonFriends(friendConnectionDTO);
-		if(commonFriendsList == null) {
-			throw new RecordNotFoundException(ApplicationExceptionConstants.NO_COMMON_FRIENDS);
-		}
 		return new FriendsListDTO(commonFriendsList);
 	}
 

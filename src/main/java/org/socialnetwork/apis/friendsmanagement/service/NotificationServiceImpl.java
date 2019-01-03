@@ -41,6 +41,7 @@ public class NotificationServiceImpl implements NotificationService{
 	@Override
 	public void subscribe(NotificationDTO notificationDTO) {
 		validationsHandler(notificationDTO, ApplicationConstants.STATUS_ACCEPTED);
+		validationHandlerForMultipleUserExists(notificationDTO);
 		notificationRepository.save(new NotificationEntity(
 				notificationDTO.getRequestor(),
 				notificationDTO.getTarget(),
@@ -53,12 +54,11 @@ public class NotificationServiceImpl implements NotificationService{
 	@Override
 	public void blockUpdates(NotificationDTO notificationDTO) {
 		validationsHandler(notificationDTO, ApplicationConstants.STATUS_BLOCKED);
+		validationHandlerForMultipleUserExists(notificationDTO);
 		notificationRepository.save(new NotificationEntity(
 				notificationDTO.getRequestor(),
 				notificationDTO.getTarget(),
 				ApplicationConstants.NOTIFY_BLOCKED));
-		friendConnectionRepository.updateFrienshipStatus(0, notificationDTO.getRequestor(), 
-				notificationDTO.getTarget());
 	}
 
 	/**
@@ -72,22 +72,34 @@ public class NotificationServiceImpl implements NotificationService{
 	}
 	
 	/**
-	 * Validate User Existence
+	 * Validate User Existence for Multiple User
+	 * @param sender
+	 */
+	private void validationHandlerForMultipleUserExists(NotificationDTO notificationDTO){
+		String userEmailCount = userRepository.getMultipleUser(notificationDTO.getRequestor(), 
+				notificationDTO.getTarget());
+		if(Integer.parseInt(userEmailCount)<2) {
+			throw new UserAccountDoesNotExists(ApplicationExceptionConstants.USER_ACCOUNT_NOT_EXISTS);
+		}
+	}
+	
+	/**
+	 * Validate User Existence for Single User
 	 * @param sender
 	 */
 	private void validationHandlerForUserExists(String sender){
-		String userCount = userRepository.getSingleUser(sender);
-		if(Integer.parseInt(userCount)<2) {
+		String userEmail = userRepository.getSingleUser(sender);
+		if(userEmail == null) {
 			throw new UserAccountDoesNotExists(ApplicationExceptionConstants.USER_ACCOUNT_NOT_EXISTS);
 		}
 	}
 
 	/**
-	 * Validations before process request
+	 * Validations before duplicate request
 	 * @param notificationDTO
 	 */
 	private void validationsHandler(NotificationDTO notificationDTO, int status) {
-		List<String> subscribedUsers = notificationRepository.getExistingSubsscribe(notificationDTO.getRequestor(),
+		List<String> subscribedUsers = notificationRepository.getExistingSubscribe(notificationDTO.getRequestor(),
 				notificationDTO.getTarget(),
 				status);
 		if(subscribedUsers.size() > 0) {
