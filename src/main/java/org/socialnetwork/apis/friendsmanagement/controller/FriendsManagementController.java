@@ -26,6 +26,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 /**
  * REST endpoint for friends management.
  * <p>
@@ -38,6 +41,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(ApplicationConstants.RESOURCE_PATH)
+@Api(value="Friends Management")
 public class FriendsManagementController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(FriendsManagementController.class);
@@ -56,6 +60,7 @@ public class FriendsManagementController {
 	 * @param accountDTO First param which holds account details
 	 * @return ResponseDTO
 	 */
+	@ApiOperation(value = "API to create user account",response = ResponseDTO.class)
 	@PostMapping("/account")
 	public ResponseDTO account(@Valid @RequestBody AccountDTO accountDTO){
 		LOG.info("Create account API request");
@@ -68,9 +73,10 @@ public class FriendsManagementController {
 	 * @param friendConnectionDTO First param which holds friend connection details
 	 * @return ResponseDTO 
 	 */
-	@PostMapping("/friendrelation")
-	public ResponseDTO friendrelation(@RequestBody FriendConnectionDTO friendConnectionDTO) {
-		friendConnectionService.friendRelation(friendConnectionDTO);
+	@ApiOperation(value = "API to create a friend connection between two email address", response = ResponseDTO.class)
+	@PostMapping("/friendconnection")
+	public ResponseDTO friendconnection(@RequestBody FriendConnectionDTO friendConnectionDTO) {
+		friendConnectionService.friendconnection(friendConnectionDTO);
 		return new ResponseDTO(Boolean.TRUE);
 	}
 
@@ -79,6 +85,7 @@ public class FriendsManagementController {
 	 * @param UserEmailDTO First param which holds user email id
 	 * @return FriendsListDTO 
 	 */
+	@ApiOperation(value = "API to retrieve the friends list for an email address", response = ResponseDTO.class)
 	@PostMapping("/friends")
 	public FriendsListDTO friends(@Valid @RequestBody UserEmailDTO userEmailDTO) {
 		List<String> friendsList = friendConnectionService.friendsList(userEmailDTO);
@@ -93,6 +100,8 @@ public class FriendsManagementController {
 	 * @param FriendConnectionDTO holds user email id
 	 * @return FriendsListDTO 
 	 */
+	@ApiOperation(value = "API to retrieve the common friends list between two\r\n" + 
+			"email addresses", response = ResponseDTO.class)
 	@PostMapping("/common")
 	public FriendsListDTO commonFriends(@RequestBody FriendConnectionDTO friendConnectionDTO) {
 		List<String> commonFriendsList = friendConnectionService.commonFriends(friendConnectionDTO);
@@ -107,6 +116,7 @@ public class FriendsManagementController {
 	 * @param notificationDTO Holds requester and target details for notification
 	 * @return ResponseDTO 
 	 */
+	@ApiOperation(value = "API to subscribe to updates from an email address", response = ResponseDTO.class)
 	@PostMapping("/subscribe")
 	public ResponseDTO subscribe(@Valid @RequestBody NotificationDTO notificationDTO) {
 		notificationService.subscribe(notificationDTO);
@@ -118,6 +128,7 @@ public class FriendsManagementController {
 	 * @param notificationDTO Holds requester and target details for notification
 	 * @return ResponseDTO 
 	 */
+	@ApiOperation(value = "API to block updates from an email address", response = ResponseDTO.class)
 	@PostMapping("/blockupdate")
 	public ResponseDTO blockUpdates(@Valid @RequestBody NotificationDTO notificationDTO) {
 		notificationService.blockUpdates(notificationDTO);
@@ -129,6 +140,8 @@ public class FriendsManagementController {
 	 * @param notificationDTO Holds requester and target details for notification
 	 * @return NotifyResponseDTO 
 	 */
+	@ApiOperation(value = "API to retrieve all email addresses that can receive\r\n" + 
+			"updates from an email address", response = ResponseDTO.class)
 	@PostMapping("/notify")
 	public NotifyResponseDTO ResponseDTO (@Valid @RequestBody NotifyDTO notifyDTO) {
 		List<String> notifiedUsers = notificationService.notify(notifyDTO);
