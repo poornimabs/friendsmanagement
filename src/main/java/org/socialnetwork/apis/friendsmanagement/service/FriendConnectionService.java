@@ -15,7 +15,7 @@ import org.socialnetwork.apis.friendsmanagement.dto.UserEmailDTO;
 * @since   1.0 
 */
 
-public interface FriendRelationService {
+public interface FriendConnectionService {
 
 	/**
 	 * This method is used to create a friendship b/w two users

@@ -17,7 +17,7 @@ import org.socialnetwork.apis.friendsmanagement.dto.NotifyResponseDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.ResponseDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.UserEmailDTO;
 import org.socialnetwork.apis.friendsmanagement.exception.RecordNotFoundException;
-import org.socialnetwork.apis.friendsmanagement.service.FriendRelationService;
+import org.socialnetwork.apis.friendsmanagement.service.FriendConnectionService;
 import org.socialnetwork.apis.friendsmanagement.service.NotificationService;
 import org.socialnetwork.apis.friendsmanagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +50,7 @@ public class FriendsManagementController {
 	UserService userService;
 
 	@Autowired
-	FriendRelationService friendConnectionService;
+	FriendConnectionService friendConnectionService;
 
 	@Autowired
 	NotificationService notificationService;

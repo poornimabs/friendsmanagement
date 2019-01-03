@@ -27,7 +27,7 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class FriendRelationServiceImpl implements FriendRelationService{
+public class FriendConnectionServiceImpl implements FriendConnectionService{
 
 	@Autowired
 	FriendConnectionRepository friendConnectionRepository;
