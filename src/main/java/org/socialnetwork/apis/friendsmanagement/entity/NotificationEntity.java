@@ -24,8 +24,8 @@ import javax.persistence.Table;
 @NamedNativeQueries({
 	@NamedNativeQuery(
 			name = "NotificationEntity.getNotifiedUsers",
-			query = "SELECT user_two friend FROM friendrelation WHERE user_one = :user and status=1" + " UNION "
-					+ "SELECT user_one friend FROM friendrelation WHERE user_two = :user and status=1" + " UNION "
+			query = "SELECT userTwo friend FROM friendrelation WHERE userOne = :user and status=1" + " UNION "
+					+ "SELECT userOne friend FROM friendrelation WHERE userTwo = :user and status=1" + " UNION "
 					+ "SELECT requestor friend FROM subscribe WHERE target = :user AND state = 1"
 			),
 	@NamedNativeQuery(

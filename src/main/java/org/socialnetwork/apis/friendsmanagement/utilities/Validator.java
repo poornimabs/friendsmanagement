@@ -13,15 +13,15 @@ import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 public class Validator {
 	/**
 	 * Validates whether the Email Address is Valid
-	 * @param user_one
-	 * @param user_two
+	 * @param userOne
+	 * @param userTwo
 	 * @return boolean
 	 */
-	public static boolean isEmailValid(String user_one, String user_two) {
+	public static boolean isEmailValid(String userOne, String userTwo) {
 		EmailValidator emailValidator = new EmailValidator();
-		boolean user_one_valid = emailValidator.isValid(user_one, null);
-		boolean user_two_valid = emailValidator.isValid(user_two, null);
-		boolean validEmail = (user_one_valid && user_two_valid) ? true : false;
+		boolean userOneValid = emailValidator.isValid(userOne, null);
+		boolean userTwoValid = emailValidator.isValid(userTwo, null);
+		boolean validEmail = (userOneValid && userTwoValid) ? true : false;
 		return validEmail;
 	}
 

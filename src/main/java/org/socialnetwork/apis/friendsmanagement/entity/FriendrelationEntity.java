@@ -2,6 +2,7 @@ package org.socialnetwork.apis.friendsmanagement.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,23 +25,23 @@ import javax.persistence.Table;
 @NamedNativeQueries({
 	@NamedNativeQuery(
 			name = "FriendrelationEntity.getFriends",
-			query = "SELECT user_two AS friend FROM friendrelation WHERE user_one =:user AND status=1"  + " UNION "
-					+ "SELECT user_one AS friend FROM friendrelation WHERE user_two =:user AND status=1"
+			query = "SELECT userTwo AS friend FROM friendrelation WHERE userOne =:user AND status=1"  + " UNION "
+					+ "SELECT userOne AS friend FROM friendrelation WHERE userTwo =:user AND status=1"
 			),
 	@NamedNativeQuery(
 			name = "FriendrelationEntity.getCommonFriends",
 			query = "SELECT UserOneFriends.id FROM"
-					+ "( SELECT user_two id FROM friendrelation WHERE user_one = :userone AND status=1" + " UNION "
-					+ "SELECT user_one id FROM friendrelation WHERE user_two = :userone AND status=1)" + " AS UserOneFriends"  
+					+ "( SELECT userTwo id FROM friendrelation WHERE userOne = :userone AND status=1" + " UNION "
+					+ "SELECT userOne id FROM friendrelation WHERE userTwo = :userone AND status=1)" + " AS UserOneFriends"  
 					+ " JOIN "
-					+ "( SELECT user_two id FROM friendrelation WHERE user_one = :usertwo AND status=1" + " UNION "
-					+ "SELECT user_one id FROM friendrelation WHERE user_two = :usertwo AND status=1)" + " AS UserTwoFriends"  
+					+ "( SELECT userTwo id FROM friendrelation WHERE userOne = :usertwo AND status=1" + " UNION "
+					+ "SELECT userOne id FROM friendrelation WHERE userTwo = :usertwo AND status=1)" + " AS UserTwoFriends"  
 					+ " ON UserOneFriends.id = UserTwoFriends.id"
 			),
 	@NamedNativeQuery(
 			name = "FriendrelationEntity.getFriendConnection",
 			query = "SELECT id FROM friendrelation WHERE "
-					+ "(user_one =:userone AND user_two =:usertwo) OR (user_one =:usertwo AND user_two =:userone) AND status = :friendship" 
+					+ "(userOne =:userone AND userTwo =:usertwo) OR (userOne =:usertwo AND userTwo =:userone) AND status = :friendship" 
 					
 			)
 })
@@ -52,15 +53,21 @@ public class FriendrelationEntity implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="id", nullable=false)
 	private Long id;
-	private String user_one;
-	private String user_two;
+	
+	@Column(name="userOne", nullable=false)
+	private String userOne;
+	
+	@Column(name="userTwo", nullable=false)
+	private String userTwo;
+	
 	private int status;
 
 	public FriendrelationEntity(String userOne, String userTwo, int status) {
 		super();
-		this.user_one = userOne;
-		this.user_two = userTwo;
+		this.userOne = userOne;
+		this.userTwo = userTwo;
 		this.status = status;
 	}
 	public Long getId() {
@@ -69,17 +76,18 @@ public class FriendrelationEntity implements Serializable{
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getUser_one() {
-		return user_one;
+	
+	public String getUserOne() {
+		return userOne;
 	}
-	public void setUser_one(String user_one) {
-		this.user_one = user_one;
+	public void setUserOne(String userOne) {
+		this.userOne = userOne;
 	}
-	public String getUser_two() {
-		return user_two;
+	public String getUseTwo() {
+		return userTwo;
 	}
-	public void setUser_two(String user_two) {
-		this.user_two = user_two;
+	public void setUseTwo(String useTwo) {
+		this.userTwo = useTwo;
 	}
 	public int getStatus() {
 		return status;
