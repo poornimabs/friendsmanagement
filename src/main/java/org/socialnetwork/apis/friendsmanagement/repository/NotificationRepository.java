@@ -29,6 +29,7 @@ public interface NotificationRepository extends JpaRepository<NotificationEntity
      * @param user
      * @return List of Users Blocked
      */
+    @Query(nativeQuery = true)
     List<String> getBlockedUsersForUpdates(@Param("userone") final String userone, 
     		@Param("usertwo") final String usertwo, @Param("status") final int status);
     
@@ -36,6 +37,7 @@ public interface NotificationRepository extends JpaRepository<NotificationEntity
      * @param user
      * @return Checks whether already subscribed for updates
      */
+    @Query(nativeQuery = true)
     List<String> getExistingSubscribe(@Param("requestor") final String requestor, 
     		@Param("target") final String target, 
     		@Param("status") final int status);

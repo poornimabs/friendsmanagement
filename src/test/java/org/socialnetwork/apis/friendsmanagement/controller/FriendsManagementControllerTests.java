@@ -1,10 +1,16 @@
 package org.socialnetwork.apis.friendsmanagement.controller;
 
+import static org.junit.Assert.assertNotNull;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.socialnetwork.apis.friendsmanagement.dto.AccountDTO;
+import org.socialnetwork.apis.friendsmanagement.dto.UserEmailDTO;
 import org.socialnetwork.apis.friendsmanagement.entity.UserEntity;
 import org.socialnetwork.apis.friendsmanagement.service.FriendConnectionService;
 import org.socialnetwork.apis.friendsmanagement.service.NotificationService;
@@ -62,6 +68,30 @@ public class FriendsManagementControllerTests {
 		String expected = "{success:true}";
 
 		JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(),false);
+	}
+	
+	@Test
+	public void friends() throws Exception {
+		List<String> friendList= new ArrayList<String>();
+		friendList.add("test1@example.com");
+		friendList.add("test2@example.com");
+		UserEmailDTO userEmail = new UserEmailDTO();
+		userEmail.setEmail("test@example.com");
+		
+		ObjectMapper mapper = new ObjectMapper();
+	    mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+	    ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+	    String requestJson = ow.writeValueAsString(userEmail);
+	    Mockito.when(
+				friendConnectionService.friendsList(userEmail)).thenReturn((friendList));
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.post(
+				"/friendsmanagement/friends").accept(
+				MediaType.APPLICATION_JSON).content(requestJson)
+				.contentType(MediaType.APPLICATION_JSON);
+
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+
+		assertNotNull(result);
 	}
 
 }
