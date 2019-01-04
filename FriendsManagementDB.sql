@@ -25,8 +25,8 @@ DROP TABLE IF EXISTS `friendrelation`;
 CREATE TABLE `friendrelation` (
   `id` bigint(20) NOT NULL,
   `status` int(11) NOT NULL,
-  `user_one` varchar(255) DEFAULT NULL,
-  `user_two` varchar(255) DEFAULT NULL,
+  `userOne` varchar(255) NOT NULL,
+  `userTwo` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -37,7 +37,7 @@ CREATE TABLE `friendrelation` (
 
 LOCK TABLES `friendrelation` WRITE;
 /*!40000 ALTER TABLE `friendrelation` DISABLE KEYS */;
-INSERT INTO `friendrelation` VALUES (1,1,'andy@example.com','john@example.com'),(2,1,'andy@example.com','selvin@example.com'),(3,1,'john@example.com','selvin@example.com'),(4,1,'selvin@example.com','maxson@example.com'),(5,1,'maxson@example.com','john@example.com');
+INSERT INTO `friendrelation` VALUES (1,1,'andy@example.com','john@example.com'),(2,1,'john@example.com','linston@example.com'),(3,1,'andy@example.com','linston@example.com'),(4,0,'dayana@example.com','tovino@example.com');
 /*!40000 ALTER TABLE `friendrelation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -85,7 +85,7 @@ CREATE TABLE `subscribe` (
 
 LOCK TABLES `subscribe` WRITE;
 /*!40000 ALTER TABLE `subscribe` DISABLE KEYS */;
-INSERT INTO `subscribe` VALUES (6,'andy@example.com',1,'maxson@example.com'),(7,'john@example.com',1,'jemi@example.com'),(8,'andy@example.com',0,'jemi@example.com'),(9,'maxson@example.com',0,'linston@example.com');
+INSERT INTO `subscribe` VALUES (5,'andy@example.com',1,'linston@example.com'),(6,'andy@example.com',1,'dayana@example.com'),(7,'john@example.com',1,'tovino@example.com'),(8,'andy@example.com',0,'tovino@example.com'),(9,'tovino@example.com',0,'dayana@example.com');
 /*!40000 ALTER TABLE `subscribe` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -110,7 +110,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('andy@example.com','andy1234','andy'),('john@example.com','john1234','john'),('selvin@example.com','selvin1234','selvin'),('linston@example.com','linston1234','linston'),('maxson@example.com','maxson1234','maxson'),('jemi@example.com','jemi1234','jemi');
+INSERT INTO `user` VALUES ('andy@example.com','andy1234','andy'),('john@example.com','john1234','john'),('linston@example.com','linston1234','linston'),('selvin@example.com','selvin1234','selvin'),('dayana@example.com','dayana1234','dayana'),('tovino@example.com','tovino1234','tovino');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -123,4 +123,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-01-04 11:45:24
+-- Dump completed on 2019-01-04 20:46:05
