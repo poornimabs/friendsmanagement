@@ -71,7 +71,8 @@ public class FriendsManagementController {
 	 * @param friendConnectionDTO First param which holds friend connection details
 	 * @return ResponseDTO 
 	 */
-	@ApiOperation(value = "API to create a friend connection between two email address", response = ResponseDTO.class)
+	@ApiOperation(value = "API to create a friend connection between two email address", 
+			response = ResponseDTO.class)
 	@PostMapping("/friendconnection")
 	public ResponseDTO friendconnection(@RequestBody FriendConnectionDTO friendConnectionDTO) {
 		LOG.info("Create a friend connection between two email address");
@@ -84,7 +85,8 @@ public class FriendsManagementController {
 	 * @param UserEmailDTO First param which holds user email id
 	 * @return FriendsListDTO 
 	 */
-	@ApiOperation(value = "API to retrieve the friends list for an email address", response = ResponseDTO.class)
+	@ApiOperation(value = "API to retrieve the friends list for an email address", 
+			response = ResponseDTO.class)
 	@PostMapping("/friends")
 	public FriendsListDTO friends(@Valid @RequestBody UserEmailDTO userEmailDTO) {
 		LOG.info("Retrieve the friends list for an email address /friends");
@@ -111,7 +113,8 @@ public class FriendsManagementController {
 	 * @param notificationDTO Holds requester and target details for notification
 	 * @return ResponseDTO 
 	 */
-	@ApiOperation(value = "API to subscribe to updates from an email address", response = ResponseDTO.class)
+	@ApiOperation(value = "API to subscribe to updates from an email address", 
+			response = ResponseDTO.class)
 	@PostMapping("/subscribe")
 	public ResponseDTO subscribe(@Valid @RequestBody NotificationDTO notificationDTO) {
 		LOG.info("Subscribe to updates from an email address");
@@ -124,7 +127,8 @@ public class FriendsManagementController {
 	 * @param notificationDTO Holds requester and target details for notification
 	 * @return ResponseDTO 
 	 */
-	@ApiOperation(value = "API to block updates from an email address", response = ResponseDTO.class)
+	@ApiOperation(value = "API to block updates from an email address", 
+			response = ResponseDTO.class)
 	@PostMapping("/blockupdate")
 	public ResponseDTO blockUpdates(@Valid @RequestBody NotificationDTO notificationDTO) {
 		LOG.info("Block updates from an email address");
@@ -140,7 +144,7 @@ public class FriendsManagementController {
 	@ApiOperation(value = "API to retrieve all email addresses that can receive\r\n" + 
 			"updates from an email address", response = ResponseDTO.class)
 	@PostMapping("/notify")
-	public NotifyResponseDTO ResponseDTO (@Valid @RequestBody NotifyDTO notifyDTO) {
+	public NotifyResponseDTO notification(@Valid @RequestBody NotifyDTO notifyDTO) {
 		LOG.info("Email addresses that can receive updates from an email address");
 		List<String> notifiedUsers = notificationService.notify(notifyDTO);
 		return new NotifyResponseDTO(notifiedUsers);
