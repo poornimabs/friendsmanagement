@@ -6,22 +6,21 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
 /**
-* Spring Boot Main Class
-*
-* @author  Poornima.BS
-* @version 1.0
-* @since   1.0 
-*/
+ * Spring Boot Main Class
+ *
+ * @author Poornima.BS
+ * @version 1.0
+ * @since 1.0
+ */
 
 @SpringBootApplication
 @Import({
-	SwaggerConfig.class
+    SwaggerConfig.class
 })
 public class FriendsmanagementApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(FriendsmanagementApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(FriendsmanagementApplication.class, args);
+    }
 
 }
-

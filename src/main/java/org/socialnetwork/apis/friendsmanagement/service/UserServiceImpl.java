@@ -9,30 +9,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
-* User Services Implementation
-*
-* @author  Poornima.BS
-* @version 1.0
-* @since   1.0 
-*/
+ * User Services Implementation
+ *
+ * @author Poornima.BS
+ * @version 1.0
+ * @since 1.0
+ */
 
 @Service
-public class UserServiceImpl implements UserService{
-	
-	@Autowired
-	UsersRepository userRepository;
+public class UserServiceImpl implements UserService {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public UserEntity account(AccountDTO accountDTO) {
-		String accountEmail = userRepository.getSingleUser(accountDTO.getEmail());
-		if(accountEmail != null) {
-			throw new DuplicateRequestException(ApplicationExceptionConstants.DUPLICATE_ACCOUNT_REQUEST);
-		}
-		return userRepository.save(new UserEntity(accountDTO.getEmail(), 
-				accountDTO.getUsername(), accountDTO.getPassword()));
-	}
-	
+    @Autowired
+    UsersRepository userRepository;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public UserEntity account(final AccountDTO accountDTO) {
+        String accountEmail = userRepository.getSingleUser(accountDTO.getEmail());
+        if (accountEmail != null) {
+            throw new DuplicateRequestException(ApplicationExceptionConstants.DUPLICATE_ACCOUNT_REQUEST);
+        }
+        return userRepository.save(new UserEntity(accountDTO.getEmail(),
+            accountDTO.getUsername(), accountDTO.getPassword()));
+    }
+
 }

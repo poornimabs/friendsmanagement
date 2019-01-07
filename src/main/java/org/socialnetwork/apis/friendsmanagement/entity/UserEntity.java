@@ -9,71 +9,68 @@ import javax.persistence.NamedNativeQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-
 /**
-* Entity class for Users
-*
-* @author  Poornima.BS
-* @version 1.0
-* @since   1.0 
-*/
+ * Entity class for Users
+ *
+ * @author Poornima.BS
+ * @version 1.0
+ * @since 1.0
+ */
 
-@Entity(name="UserEntity")
-@Table (name="user",
-		uniqueConstraints = @UniqueConstraint(columnNames = "EMAIL"))
+@Entity(name = "UserEntity")
+@Table(name = "user",
+    uniqueConstraints = @UniqueConstraint(columnNames = "EMAIL"))
 
 @NamedNativeQueries({
-	@NamedNativeQuery(
-			name = "UserEntity.getMultipleUser",
-			query = "SELECT COUNT(email) FROM user WHERE email =:userone_email OR email =:usertwo_email"
-			),
-	@NamedNativeQuery(
-			name = "UserEntity.getSingleUser",
-			query = "SELECT email FROM user WHERE email =:userone_email"
-			)
+    @NamedNativeQuery(
+        name = "UserEntity.getMultipleUser",
+        query = "SELECT COUNT(email) FROM user WHERE email =:userone_email OR email =:usertwo_email"),
+    @NamedNativeQuery(
+        name = "UserEntity.getSingleUser",
+        query = "SELECT email FROM user WHERE email =:userone_email")
 })
-public class UserEntity implements Serializable{
-	private static final long serialVersionUID = 4611252234581144064L;
+public class UserEntity implements Serializable {
 
-	@Id
+    private static final long serialVersionUID = 4611252234581144064L;
+
+    @Id
     private String email;
-	private String username;
-	private String password;
-	
-	public UserEntity() {
-		
-	}
+    private String username;
+    private String password;
 
-	public UserEntity(String email, String username, String password) {
-		super();
-		this.email = email;
-		this.username = username;
-		this.password = password;
-	}
+    public UserEntity() {
 
-	public String getEmail() {
-		return email;
-	}
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	
-	public String getUsername() {
-		return username;
-	}
+    public UserEntity(String email, String username, String password) {
+        super();
+        this.email = email;
+        this.username = username;
+        this.password = password;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
 }
