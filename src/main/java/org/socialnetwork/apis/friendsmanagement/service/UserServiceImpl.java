@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity account(final AccountDTO accountDTO) {
         String accountEmail = userRepository.getSingleUser(accountDTO.getEmail());
-        if (accountEmail != null) {
+        if (null != accountEmail) {
             throw new DuplicateRequestException(ApplicationExceptionConstants.DUPLICATE_ACCOUNT_REQUEST);
         }
         return userRepository.save(new UserEntity(accountDTO.getEmail(),

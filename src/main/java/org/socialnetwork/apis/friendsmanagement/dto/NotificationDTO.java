@@ -18,14 +18,14 @@ public class NotificationDTO implements Serializable {
 
     private static final long serialVersionUID = 1102744786883391477L;
 
-    @NotEmpty(message = "Requestor Email cannot be an empty string")
-    @NotNull(message = "Requestor Email cannot be null")
-    @Email(message = "Please provide a valid email address")
+    @NotEmpty(message = "{requestor.email.empty}")
+    @NotNull(message = "{requestor email.null}")
+    @Email(message = "{user.email.invalid}")
     private String requestor;
 
-    @NotEmpty(message = "Target Email cannot be an empty string")
-    @NotNull(message = "Target Email cannot be null")
-    @Email(message = "Please provide a valid email address")
+    @NotEmpty(message = "{target.email.empty}")
+    @NotNull(message = "{target email.null}")
+    @Email(message = "{user.email.invalid}")
     private String target;
 
     public String getRequestor() {

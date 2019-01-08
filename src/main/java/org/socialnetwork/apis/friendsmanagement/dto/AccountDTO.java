@@ -14,19 +14,19 @@ import javax.validation.constraints.Size;
  */
 public class AccountDTO {
 
-    @NotEmpty(message = "Email cannot be an empty string")
-    @NotNull(message = "Email cannot be null")
-    @Email(message = "Please provide a valid email address")
+    @NotEmpty(message = "{user.email.empty}")
+    @NotNull(message = "{user.email.null}")
+    @Email(message = "{user.email.invalid}")
     private String email;
 
-    @NotEmpty(message = "Username cannot be an empty string")
-    @NotNull(message = "Username cannot be null")
-    @Size(min = 2, message = "Name should have atleast 2 characters")
+    @NotEmpty(message = "{user.name.empty}")
+    @NotNull(message = "{user.name.null}")
+    @Size(min = 2, message = "{user.name.min}")
     private String username;
 
-    @NotEmpty(message = "Password cannot be an empty string")
-    @NotNull(message = "Password cannot be null")
-    @Size(min = 7, message = "Password should have atleast 2 characters")
+    @NotEmpty(message = "{user.password.empty}")
+    @NotNull(message = "{user.password.null}")
+    @Size(min = 7, message = "{user.password.min}")
     private String password;
 
     public String getEmail() {

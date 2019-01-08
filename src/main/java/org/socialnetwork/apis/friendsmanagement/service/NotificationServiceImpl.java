@@ -57,7 +57,7 @@ public class NotificationServiceImpl implements NotificationService {
         }
         Long userId = friendConnectionRepository.getFriendConnection(notificationDTO.getRequestor(),
             notificationDTO.getTarget(), ApplicationConstants.STATUS_BLOCKED);
-        if (userId != null) {
+        if (null != userId) {
             friendConnectionRepository.updateStatus(ApplicationConstants.STATUS_ACCEPTED, userId);
         }
 
@@ -85,7 +85,7 @@ public class NotificationServiceImpl implements NotificationService {
         }
         Long userId = friendConnectionRepository.getFriendConnection(notificationDTO.getRequestor(),
             notificationDTO.getTarget(), ApplicationConstants.STATUS_ACCEPTED);
-        if (userId != null) {
+        if (null != userId) {
             friendConnectionRepository.updateStatus(ApplicationConstants.STATUS_BLOCKED, userId);
         }
     }
@@ -97,7 +97,7 @@ public class NotificationServiceImpl implements NotificationService {
     public List<String> notify(final NotifyDTO notifyDTO) {
         validationHandlerForUserExists(notifyDTO.getSender());
         List<String> notifiedUsers = notificationRepository.getNotifiedUsers(notifyDTO.getSender());
-        if (notifiedUsers == null) {
+        if (null == notifiedUsers) {
             throw new RecordNotFoundException(ApplicationExceptionConstants.RECORD_NOT_FOUND);
         }
         return notifiedUsers;

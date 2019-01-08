@@ -53,7 +53,7 @@ public class FriendConnectionServiceImpl implements FriendConnectionService {
     @Override
     public List<String> friendsList(final UserEmailDTO userEmailDTO) {
         String userEmail = userRepository.getSingleUser(userEmailDTO.getEmail());
-        if (userEmail == null) {
+        if (null == userEmail) {
             throw new UserAccountDoesNotExists(ApplicationExceptionConstants.USER_ACCOUNT_DOES_NOT_EXISTS);
         }
         List<String> friendsList = friendConnectionRepository.getFriends(userEmailDTO.getEmail());
@@ -109,13 +109,13 @@ public class FriendConnectionServiceImpl implements FriendConnectionService {
         Long friendShipExists = friendConnectionRepository.getFriendConnection(
             friendConnectionDTO.getFriends().get(0),
             friendConnectionDTO.getFriends().get(1), ApplicationConstants.STATUS_ACCEPTED);
-        if (friendShipExists != null) {
+        if (null != friendShipExists) {
             throw new FriendConnectionException(ApplicationExceptionConstants.FRIENDSHIP_EXISTS);
         }
         Long blockedFriend = friendConnectionRepository.getFriendConnection(
             friendConnectionDTO.getFriends().get(0),
             friendConnectionDTO.getFriends().get(1), ApplicationConstants.STATUS_BLOCKED);
-        if (blockedFriend != null) {
+        if (null != blockedFriend) {
             throw new FriendConnectionException(ApplicationExceptionConstants.FRIENDSHIP_BLOCKED);
         }
     }
@@ -126,7 +126,7 @@ public class FriendConnectionServiceImpl implements FriendConnectionService {
      * @param friendConnectionDTO
      */
     private void commonValidations(final FriendConnectionDTO friendConnectionDTO) {
-        if (friendConnectionDTO.getFriends() == null) {
+        if (null == friendConnectionDTO.getFriends()) {
             throw new DataInvalidException(ApplicationExceptionConstants.FRIENDRELATION_VALIDATION_FAILED);
         }
         if (friendConnectionDTO.getFriends().size() > 2 || friendConnectionDTO.getFriends().size() < 2) {
