@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.socialnetwork.apis.friendsmanagement.dto.AccountDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.FriendConnectionDTO;
@@ -19,6 +20,7 @@ import org.socialnetwork.apis.friendsmanagement.dto.UserEmailDTO;
 import org.socialnetwork.apis.friendsmanagement.entity.UserEntity;
 import org.socialnetwork.apis.friendsmanagement.service.FriendConnectionService;
 import org.socialnetwork.apis.friendsmanagement.service.NotificationService;
+import org.socialnetwork.apis.friendsmanagement.service.NotificationServiceImpl;
 import org.socialnetwork.apis.friendsmanagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -49,6 +51,9 @@ public class FriendsManagementControllerTests {
 	
 	@MockBean
 	private NotificationService notificationService;
+	
+	@Spy
+	private NotificationServiceImpl notificationServiceImpl;
 	
 	@Test
 	public void account() throws Exception {
@@ -159,12 +164,25 @@ public class FriendsManagementControllerTests {
 	
 	@Test
 	public void blockUpdates() throws Exception  {
-		NotificationDTO notifyDTO = new NotificationDTO();
-		notifyDTO.setRequestor("test1.example.com");
-		notifyDTO.setTarget("test4@example.com");
+		NotificationDTO notificationDTO = new NotificationDTO();
+		notificationDTO.setRequestor("test1.example.com");
+		notificationDTO.setTarget("test4@example.com");
 		
-		Mockito.doNothing().when(notificationService).blockUpdates(notifyDTO);
-		notificationService.blockUpdates(notifyDTO);
+		Mockito.doNothing().when(notificationServiceImpl).blockUpdates(notificationDTO);
+		notificationServiceImpl.blockUpdates(notificationDTO);
+		Mockito.verify(notificationServiceImpl).blockUpdates(notificationDTO);
+		
+	}
+	
+	@Test
+	public void subscribe() throws Exception  {
+		NotificationDTO notificationDTO = new NotificationDTO();
+		notificationDTO.setRequestor("test1.example.com");
+		notificationDTO.setTarget("test4@example.com");
+		
+		Mockito.doNothing().when(notificationServiceImpl).subscribe(notificationDTO);
+		notificationServiceImpl.subscribe(notificationDTO);
+		Mockito.verify(notificationServiceImpl).subscribe(notificationDTO);
 		
 	}
 
