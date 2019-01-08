@@ -24,10 +24,10 @@ import javax.persistence.UniqueConstraint;
 @NamedNativeQueries({
     @NamedNativeQuery(
         name = "UserEntity.getMultipleUser",
-        query = "SELECT COUNT(email) FROM user WHERE email =:userone_email OR email =:usertwo_email"),
+        query = "SELECT COUNT(email) FROM user WHERE email =:userOneEmail OR email =:userTwoEmail"),
     @NamedNativeQuery(
         name = "UserEntity.getSingleUser",
-        query = "SELECT email FROM user WHERE email =:userone_email")
+        query = "SELECT email FROM user WHERE email =:userOneEmail")
 })
 public class UserEntity implements Serializable {
 

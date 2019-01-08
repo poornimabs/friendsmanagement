@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.socialnetwork.apis.friendsmanagement.constant.ApplicationConstants;
+import org.socialnetwork.apis.friendsmanagement.constant.ApplicationExceptionConstants;
 import org.socialnetwork.apis.friendsmanagement.dto.AccountDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.FriendConnectionDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.FriendsListDTO;
@@ -15,6 +16,7 @@ import org.socialnetwork.apis.friendsmanagement.dto.NotifyDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.NotifyResponseDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.ResponseDTO;
 import org.socialnetwork.apis.friendsmanagement.dto.UserEmailDTO;
+import org.socialnetwork.apis.friendsmanagement.exception.FriendConnectionException;
 import org.socialnetwork.apis.friendsmanagement.service.FriendConnectionService;
 import org.socialnetwork.apis.friendsmanagement.service.NotificationService;
 import org.socialnetwork.apis.friendsmanagement.service.UserService;
@@ -78,6 +80,7 @@ public class FriendsManagementController {
     @PostMapping("/friendconnection")
     public ResponseDTO friendconnection(@RequestBody final FriendConnectionDTO friendConnectionDTO) {
         LOG.info("Create a friend connection between two email address");
+        validateRequest(friendConnectionDTO);
         friendConnectionService.friendconnection(friendConnectionDTO);
         return new ResponseDTO(Boolean.TRUE);
     }
@@ -89,7 +92,7 @@ public class FriendsManagementController {
      * @return FriendsListDTO
      */
     @ApiOperation(value = "API to retrieve the friends list for an email address",
-        response = ResponseDTO.class)
+        response = FriendsListDTO.class)
     @PostMapping("/friends")
     public FriendsListDTO friends(@Valid @RequestBody final UserEmailDTO userEmailDTO) {
         LOG.info("Retrieve the friends list for an email address /friends");
@@ -104,10 +107,11 @@ public class FriendsManagementController {
      * @return FriendsListDTO
      */
     @ApiOperation(value = "API to retrieve the common friends list between two\r\n" +
-        "email addresses", response = ResponseDTO.class)
+        "email addresses", response = FriendsListDTO.class)
     @PostMapping("/common")
     public FriendsListDTO commonFriends(@RequestBody final FriendConnectionDTO friendConnectionDTO) {
         LOG.info("Retrieve common friends list between two email addresses");
+        validateRequest(friendConnectionDTO);
         List<String> commonFriendsList = friendConnectionService.commonFriends(friendConnectionDTO);
         return new FriendsListDTO(commonFriendsList);
     }
@@ -149,11 +153,24 @@ public class FriendsManagementController {
      * @return NotifyResponseDTO
      */
     @ApiOperation(value = "API to retrieve all email addresses that can receive\r\n" +
-        "updates from an email address", response = ResponseDTO.class)
+        "updates from an email address", response = NotifyResponseDTO.class)
     @PostMapping("/notify")
     public NotifyResponseDTO notification(@Valid @RequestBody final NotifyDTO notifyDTO) {
         LOG.info("Email addresses that can receive updates from an email address");
         List<String> notifiedUsers = notificationService.notify(notifyDTO);
         return new NotifyResponseDTO(notifiedUsers);
+    }
+    
+    /**
+     * Validate FriendConnectionDTO Request Param
+     * @param friendConnectionDTO
+     */
+    private void validateRequest(final FriendConnectionDTO friendConnectionDTO) {
+    	 if (null == friendConnectionDTO.getFriends()) {
+             throw new FriendConnectionException(ApplicationExceptionConstants.FRIENDRELATION_VALIDATION_FAILED);
+         }
+         if (friendConnectionDTO.getFriends().size() > 2 || friendConnectionDTO.getFriends().size() < 2) {
+             throw new FriendConnectionException(ApplicationExceptionConstants.FRIENDS_CONNECTION);
+         }
     }
 }

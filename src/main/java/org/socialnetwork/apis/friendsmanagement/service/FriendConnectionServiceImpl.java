@@ -9,6 +9,7 @@ import org.socialnetwork.apis.friendsmanagement.dto.UserEmailDTO;
 import org.socialnetwork.apis.friendsmanagement.entity.FriendrelationEntity;
 import org.socialnetwork.apis.friendsmanagement.exception.BlockedFriendshipException;
 import org.socialnetwork.apis.friendsmanagement.exception.DataInvalidException;
+import org.socialnetwork.apis.friendsmanagement.exception.DuplicateRequestException;
 import org.socialnetwork.apis.friendsmanagement.exception.FriendConnectionException;
 import org.socialnetwork.apis.friendsmanagement.exception.RecordNotFoundException;
 import org.socialnetwork.apis.friendsmanagement.exception.UserAccountDoesNotExists;
@@ -110,7 +111,7 @@ public class FriendConnectionServiceImpl implements FriendConnectionService {
             friendConnectionDTO.getFriends().get(0),
             friendConnectionDTO.getFriends().get(1), ApplicationConstants.STATUS_ACCEPTED);
         if (null != friendShipExists) {
-            throw new FriendConnectionException(ApplicationExceptionConstants.FRIENDSHIP_EXISTS);
+            throw new DuplicateRequestException(ApplicationExceptionConstants.FRIENDSHIP_EXISTS);
         }
         Long blockedFriend = friendConnectionRepository.getFriendConnection(
             friendConnectionDTO.getFriends().get(0),
@@ -126,12 +127,6 @@ public class FriendConnectionServiceImpl implements FriendConnectionService {
      * @param friendConnectionDTO
      */
     private void commonValidations(final FriendConnectionDTO friendConnectionDTO) {
-        if (null == friendConnectionDTO.getFriends()) {
-            throw new DataInvalidException(ApplicationExceptionConstants.FRIENDRELATION_VALIDATION_FAILED);
-        }
-        if (friendConnectionDTO.getFriends().size() > 2 || friendConnectionDTO.getFriends().size() < 2) {
-            throw new DataInvalidException(ApplicationExceptionConstants.FRIENDS_CONNECTION);
-        }
         boolean validEmail = Validator.isEmailValid(friendConnectionDTO.getFriends().get(0),
             friendConnectionDTO.getFriends().get(1));
         if (!validEmail) {

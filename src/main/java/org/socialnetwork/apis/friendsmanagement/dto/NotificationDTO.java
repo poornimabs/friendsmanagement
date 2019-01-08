@@ -19,12 +19,12 @@ public class NotificationDTO implements Serializable {
     private static final long serialVersionUID = 1102744786883391477L;
 
     @NotEmpty(message = "{requestor.email.empty}")
-    @NotNull(message = "{requestor email.null}")
+    @NotNull(message = "{requestor.email.null}")
     @Email(message = "{user.email.invalid}")
     private String requestor;
 
     @NotEmpty(message = "{target.email.empty}")
-    @NotNull(message = "{target email.null}")
+    @NotNull(message = "{target.email.null}")
     @Email(message = "{user.email.invalid}")
     private String target;
 

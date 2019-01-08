@@ -123,7 +123,7 @@ like foreign key in order to speed up the CRUD operations
 
 ![DB ER Diagram](https://github.com/poornimabs/friendsmanagement//blob/master/DB_DESIGN.png)
 
-## Docker Hub Container Images
+## Docker Deployment
 
 ![Repositories](https://github.com/poornimabs/friendsmanagement//blob/master/Repositories_Docker.PNG)
 

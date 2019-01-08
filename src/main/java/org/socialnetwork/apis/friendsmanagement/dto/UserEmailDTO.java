@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 
 public class UserEmailDTO {
 
-    @NotEmpty(message = "{user.email.empty}")
+	@NotEmpty(message = "{user.email.empty}")
     @NotNull(message = "{user.email.null}")
     @Email(message = "{user.email.invalid}")
     private String email;

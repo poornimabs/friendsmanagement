@@ -16,19 +16,19 @@ import org.springframework.data.repository.query.Param;
 public interface UsersRepository extends JpaRepository<UserEntity, String> {
 
     /**
-     * @param userone_email
-     * @param usertwo_email
+     * @param userOneEmail
+     * @param userTwoEmail
      * @return Users Count
      */
     @Query(nativeQuery = true)
-    String getMultipleUser(@Param("userone_email") final String userone_email,
-        @Param("usertwo_email") final String usertwo_email);
+    String getMultipleUser(@Param("userOneEmail") final String userOneEmail,
+        @Param("userTwoEmail") final String userTwoEmail);
 
     /**
      * @param userone usertwo
      * @return List of friends for a user
      */
     @Query(nativeQuery = true)
-    String getSingleUser(@Param("userone_email") final String userone_email);
+    String getSingleUser(@Param("userOneEmail") final String userOneEmail);
 
 }
