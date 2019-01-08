@@ -114,16 +114,28 @@ API to retrieve all email addresses that can receive updates from an email addre
 ```
 POST /friendsmanagement/notify
 ```  
-        
+    
+    
 ## Database
 
 Constraints are checked programmatically rather than using database constraints 
 like foreign key in order to speed up the CRUD operations
 
-<img src="https://github.com/poornimabs/friendsmanagement//blob/master/DB_DESIGN.png" alt="DB ER Diagram"/>
+![DB ER Diagram](https://github.com/poornimabs/friendsmanagement//blob/master/DB_DESIGN.png)
 
 ## Docker Hub Container Images
 
-<img src="https://github.com/poornimabs/friendsmanagement//blob/master/Repositories_Docker.PNG" alt="Docker Repositories"/>
+![Repositories](https://github.com/poornimabs/friendsmanagement//blob/master/Repositories_Docker.PNG)
+
+![API Repository](https://github.com/poornimabs/friendsmanagement//blob/master/API_repository.PNG)
+
+![MySQL Repository](https://github.com/poornimabs/friendsmanagement//blob/master/MYSql_repository.PNG)
+
+![Containers](https://github.com/poornimabs/friendsmanagement//blob/master/DockerContainers.PNG)
+
+
+
+
+
 
 
