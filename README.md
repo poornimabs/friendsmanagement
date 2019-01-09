@@ -41,7 +41,7 @@ Hibernate Validator is implementations of the Bean Validation API
  #### Swagger UI
  * git clone the project 
  * Build the project and find API documentation 
- ![Swagger Documentation](http://35.229.113.202:8080/swagger-ui.html)
+![Swagger Documentation](http://35.229.113.202:8080/swagger-ui.html)
 
 ### Steps to Setup
 
@@ -76,7 +76,7 @@ Alternatively, you can run the app without packaging it using -
 mvn spring-boot:run
 ```
 
-The app will start running at <http://localhost:8090>.
+The app will start running at <http://localhost:8080>.
 
 **5. Change the port in application.properties if port already in use**
 
