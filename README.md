@@ -126,13 +126,13 @@ like foreign key in order to speed up the CRUD operations
 
 ## Docker Deployment
 
-![Repositories](https://github.com/poornimabs/friendsmanagement//blob/master/Repositories_Docker.PNG)
+![Repositories](./Repositories_Docker.PNG)
 
-![API Repository](https://github.com/poornimabs/friendsmanagement//blob/master/API_repository.PNG)
+![API Repository](./API_repository.PNG)
 
-![MySQL Repository](https://github.com/poornimabs/friendsmanagement//blob/master/MYSql_repository.PNG)
+![MySQL Repository](./MYSql_repository.PNG)
 
-![Containers](https://github.com/poornimabs/friendsmanagement//blob/master/DockerContainers.PNG)
+![Containers](./DockerContainers.PNG)
 
 
 
