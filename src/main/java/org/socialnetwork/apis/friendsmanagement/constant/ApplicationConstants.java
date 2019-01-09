@@ -24,6 +24,11 @@ public class ApplicationConstants {
      * Represents the relationship status - Blocked
      */
     public static final int STATUS_BLOCKED = 0;
+    
+    /**
+     * Email extractor regular expression
+     */
+    public static final String EMAIL_EXTRACTOR_REGEX = "[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+";
 
     /**
      * Accepted type to check for updates

@@ -70,7 +70,12 @@ public class ApplicationExceptionConstants {
     public static final String DUPLICATE_ACCOUNT_REQUEST = "Duplicate account request";
 
     /**
-     * 
+     * No Friend Connection Exists
      */
     public static final String NO_FRIEND_CONNECTION = "No friend connections exists";
+    
+    /**
+     *Mentioned user not registered
+     */
+    public static final String MENTIONED_USER = "The mentioned user in update is not registered";
 }

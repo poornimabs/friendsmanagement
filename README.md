@@ -122,7 +122,7 @@ POST /friendsmanagement/notify
 Constraints are checked programmatically rather than using database constraints 
 like foreign key in order to speed up the CRUD operations
 
-![DB ER Diagram](https://github.com/poornimabs/friendsmanagement//blob/master/DB_DESIGN.png)
+![DB ER Diagram](./DB_DESIGN.png)
 
 ## Docker Deployment
 

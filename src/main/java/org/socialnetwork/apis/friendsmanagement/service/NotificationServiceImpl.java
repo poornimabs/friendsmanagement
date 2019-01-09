@@ -1,5 +1,6 @@
 package org.socialnetwork.apis.friendsmanagement.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.socialnetwork.apis.friendsmanagement.constant.ApplicationConstants;
@@ -13,6 +14,7 @@ import org.socialnetwork.apis.friendsmanagement.exception.UserAccountDoesNotExis
 import org.socialnetwork.apis.friendsmanagement.repository.FriendConnectionRepository;
 import org.socialnetwork.apis.friendsmanagement.repository.NotificationRepository;
 import org.socialnetwork.apis.friendsmanagement.repository.UsersRepository;
+import org.socialnetwork.apis.friendsmanagement.utilities.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -97,10 +99,37 @@ public class NotificationServiceImpl implements NotificationService {
     public List<String> notify(final NotifyDTO notifyDTO) {
         validationHandlerForUserExists(notifyDTO.getSender());
         List<String> notifiedUsers = notificationRepository.getNotifiedUsers(notifyDTO.getSender());
-        if (null == notifiedUsers) {
+        List<String> extractedEmails = textEmailExtractor(notifyDTO.getText());
+        extractedEmails.forEach(email->{
+    		if(!notifiedUsers.contains(email)){
+    			notifiedUsers.add(email);
+    		}
+    	});
+        if (null == notifiedUsers || notifiedUsers.size() == 0) {
             throw new RecordNotFoundException(ApplicationExceptionConstants.RECORD_NOT_FOUND);
         }
         return notifiedUsers;
+    }
+    
+    /**
+     * Checks for email in text and extracts
+     * @param text
+     * @return
+     */
+    private List<String> textEmailExtractor(String text) {
+    	List<String> emails = Validator.emailExtractor(text);
+        List<String> extractedEmails = new ArrayList<String>();
+        if(null != emails) {
+        	emails.forEach(emailId->{
+        		String email = userRepository.getSingleUser(emailId);
+        		if(email != null) {
+            			extractedEmails.add(email);
+        		}else {
+        			throw new UserAccountDoesNotExists(ApplicationExceptionConstants.MENTIONED_USER);
+        		}
+        	});
+        }
+        return extractedEmails;
     }
 
     /**

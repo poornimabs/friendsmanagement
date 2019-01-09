@@ -1,6 +1,12 @@
 package org.socialnetwork.apis.friendsmanagement.utilities;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
+import org.socialnetwork.apis.friendsmanagement.constant.ApplicationConstants;
 
 /**
  * Validator Utilities
@@ -24,6 +30,20 @@ public class Validator {
         boolean userOneValid = emailValidator.isValid(userOne, null);
         boolean userTwoValid = emailValidator.isValid(userTwo, null);
         return (userOneValid && userTwoValid) ? true : false;
+    }
+    
+    /**
+     * Email extractor from text
+     * @param text
+     * @return
+     */
+    public static List<String> emailExtractor(String text) {
+    	Matcher m = Pattern.compile(ApplicationConstants.EMAIL_EXTRACTOR_REGEX).matcher(text);
+ 	    List<String> emailsExtracted = new ArrayList<String>();
+ 	    while (m.find()) {
+ 	    	emailsExtracted.add(m.group());
+ 	    }
+ 	    return emailsExtracted;
     }
 
 }
