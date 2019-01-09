@@ -41,7 +41,7 @@ Hibernate Validator is implementations of the Bean Validation API
  #### Swagger UI
  * git clone the project 
  * Build the project and find API documentation 
-![Swagger Documentation](http://35.229.113.202:8080/swagger-ui.html)
+<a href="http://35.229.113.202:8080/swagger-ui.html">Swagger Documentation</a>
 
 ### Steps to Setup
 
