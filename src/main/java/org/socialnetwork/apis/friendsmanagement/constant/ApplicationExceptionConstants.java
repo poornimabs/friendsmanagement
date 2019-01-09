@@ -27,7 +27,7 @@ public class ApplicationExceptionConstants {
     /**
      * Friend Connection Data Validation
      */
-    public static final String FRIENDRELATION_VALIDATION_FAILED = "Validation Failed - Invalid Data For Friend Connection";
+    public static final String FRIENDRELATION_VALIDATION_FAILED = "Validation Failed - Invalid Data Entered";
 
     /**
      * Friend Connection Data Validation - Friend Connection Requires Two Users - Greater or Less than will give an Error
