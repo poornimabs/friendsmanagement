@@ -30,15 +30,4 @@ public class ApplicationConstants {
      */
     public static final String EMAIL_EXTRACTOR_REGEX = "[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+";
 
-    /**
-     * Accepted type to check for updates
-     */
-    public static final int ACCEPTED_TYPE = 1;
-
-    /**
-     * Blocked type to check for updates
-     */
-    public static final int BLOCKED_TYPE = 0;
-
-  
 }
