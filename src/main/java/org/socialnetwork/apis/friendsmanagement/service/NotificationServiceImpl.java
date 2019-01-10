@@ -42,21 +42,10 @@ public class NotificationServiceImpl implements NotificationService {
      */
     @Override
     public void subscribe(final NotificationDTO notificationDTO) {
-        validationHandlerForMultipleUserExists(notificationDTO);
-        validationsHandler(notificationDTO, ApplicationConstants.STATUS_ACCEPTED,
-            ApplicationConstants.ACCEPTED_TYPE);
+    	validatesSubscribeBlock(notificationDTO, ApplicationConstants.STATUS_ACCEPTED);
         boolean updateRequired = validationsHandler(notificationDTO, ApplicationConstants.STATUS_BLOCKED,
-            ApplicationConstants.ACCEPTED_TYPE);
-        if (updateRequired) {
-            // Entry already exists requires status change
-            notificationRepository.updateSubscribeStatus(ApplicationConstants.NOTIFY_ACCEPTED,
-                notificationDTO.getRequestor(), notificationDTO.getTarget());
-        } else {
-            notificationRepository.save(new NotificationEntity(
-                notificationDTO.getRequestor(),
-                notificationDTO.getTarget(),
-                ApplicationConstants.NOTIFY_ACCEPTED));
-        }
+            ApplicationConstants.STATUS_ACCEPTED);
+        subscribeBlockUpdates(updateRequired, notificationDTO, ApplicationConstants.STATUS_ACCEPTED);
         Long userId = friendConnectionRepository.getFriendConnection(notificationDTO.getRequestor(),
             notificationDTO.getTarget(), ApplicationConstants.STATUS_BLOCKED);
         if (null != userId) {
@@ -64,34 +53,56 @@ public class NotificationServiceImpl implements NotificationService {
         }
 
     }
+    
+    /**
+     * Validates Input for user account exists and duplicate request 
+     * @param notificationDTO
+     * @param status
+     */
+    private void validatesSubscribeBlock(final NotificationDTO notificationDTO, final int status) {
+    	validationHandlerForMultipleUserExists(notificationDTO);
+        validationsHandler(notificationDTO, status,
+        		status);
+    }
+    
+    
 
     /**
-     * {@inheritDoc}
+     * Updates User for subscribe and updates
+     * @param updateRequired
+     * @param notificationDTO
+     * @param status
      */
-    @Override
-    public void blockUpdates(final NotificationDTO notificationDTO) {
-        validationHandlerForMultipleUserExists(notificationDTO);
-        validationsHandler(notificationDTO, ApplicationConstants.STATUS_BLOCKED,
-            ApplicationConstants.BLOCKED_TYPE);
-        boolean updateRequired = validationsHandler(notificationDTO, ApplicationConstants.STATUS_ACCEPTED,
-            ApplicationConstants.BLOCKED_TYPE);
-        if (updateRequired) {
+    private void subscribeBlockUpdates(final boolean updateRequired, 
+    		final NotificationDTO notificationDTO,final int status) {
+    	if (updateRequired) {
             // Entry already exists requires status change
-            notificationRepository.updateSubscribeStatus(ApplicationConstants.NOTIFY_BLOCKED,
+            notificationRepository.updateSubscribeStatus(status,
                 notificationDTO.getRequestor(), notificationDTO.getTarget());
         } else {
             notificationRepository.save(new NotificationEntity(
                 notificationDTO.getRequestor(),
                 notificationDTO.getTarget(),
-                ApplicationConstants.NOTIFY_BLOCKED));
+                status));
         }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void blockUpdates(final NotificationDTO notificationDTO) {
+    	validatesSubscribeBlock(notificationDTO, ApplicationConstants.STATUS_BLOCKED);
+        boolean updateRequired = validationsHandler(notificationDTO, ApplicationConstants.STATUS_ACCEPTED,
+            ApplicationConstants.STATUS_BLOCKED);
+        subscribeBlockUpdates(updateRequired, notificationDTO, ApplicationConstants.STATUS_BLOCKED);
         Long userId = friendConnectionRepository.getFriendConnection(notificationDTO.getRequestor(),
             notificationDTO.getTarget(), ApplicationConstants.STATUS_ACCEPTED);
         if (null != userId) {
             friendConnectionRepository.updateStatus(ApplicationConstants.STATUS_BLOCKED, userId);
         }
     }
-
+    
     /**
      * {@inheritDoc}
      */
