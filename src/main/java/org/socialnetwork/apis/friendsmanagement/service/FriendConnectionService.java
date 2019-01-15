@@ -22,7 +22,7 @@ public interface FriendConnectionService {
      * @param friendConnectionDTO
      * @return void
      */
-    void friendconnection(final FriendConnectionDTO friendConnectionDTO);
+    void friendConnection(final FriendConnectionDTO friendConnectionDTO);
 
     /**
      * This method is used to get friends list wrt single user

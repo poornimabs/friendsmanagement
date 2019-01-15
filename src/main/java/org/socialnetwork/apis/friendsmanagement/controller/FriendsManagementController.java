@@ -81,7 +81,7 @@ public class FriendsManagementController {
     public ResponseDTO friendconnection(@RequestBody final FriendConnectionDTO friendConnectionDTO) {
         LOG.info("Create a friend connection between two email address");
         validateRequest(friendConnectionDTO);
-        friendConnectionService.friendconnection(friendConnectionDTO);
+        friendConnectionService.friendConnection(friendConnectionDTO);
         return new ResponseDTO(Boolean.TRUE);
     }
 

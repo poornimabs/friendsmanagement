@@ -44,7 +44,7 @@ public class FriendConnectionServiceImpl implements FriendConnectionService {
      * {@inheritDoc}
      */
     @Override
-    public void friendconnection(final FriendConnectionDTO friendConnectionDTO) {
+    public void friendConnection(final FriendConnectionDTO friendConnectionDTO) {
         friendConnectionValidation(friendConnectionDTO);
     }
 
