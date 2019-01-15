@@ -78,7 +78,7 @@ public class FriendsManagementController {
     @ApiOperation(value = "API to create a friend connection between two email address",
         response = ResponseDTO.class)
     @PostMapping("/friendconnection")
-    public ResponseDTO friendconnection(@RequestBody final FriendConnectionDTO friendConnectionDTO) {
+    public ResponseDTO friendConnection(@RequestBody final FriendConnectionDTO friendConnectionDTO) {
         LOG.info("Create a friend connection between two email address");
         validateRequest(friendConnectionDTO);
         friendConnectionService.friendConnection(friendConnectionDTO);

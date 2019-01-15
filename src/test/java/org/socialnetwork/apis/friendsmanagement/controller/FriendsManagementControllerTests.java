@@ -183,6 +183,19 @@ public class FriendsManagementControllerTests {
 		Mockito.doNothing().when(notificationServiceImpl).subscribe(notificationDTO);
 		notificationServiceImpl.subscribe(notificationDTO);
 		Mockito.verify(notificationServiceImpl).subscribe(notificationDTO);
+	}
+	
+	@Test
+	public void friendConnection() throws Exception  {
+		List<String> friendList= new ArrayList<String>();
+		friendList.add("test1@example.com");
+		friendList.add("test2@example.com");
+		FriendConnectionDTO friendConnDTO = new FriendConnectionDTO();
+		friendConnDTO.setFriends(friendList);
+		
+		Mockito.doNothing().when(friendConnectionService).friendConnection(friendConnDTO);
+		friendConnectionService.friendConnection(friendConnDTO);
+		Mockito.verify(friendConnectionService).friendConnection(friendConnDTO);
 		
 	}
 
